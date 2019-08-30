@@ -85,7 +85,7 @@ public class LoginController implements Initializable {
                     Node node = (Node) event.getSource();
                     Stage stage = (Stage) node.getScene().getWindow();
                     stage.close();
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml_ui/HomeUI.fxml")));
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/HomeUI.fxml")));
                     HomeUIController setter = new HomeUIController();
                     stage.setScene(scene);
                     stage.setResizable(false);
