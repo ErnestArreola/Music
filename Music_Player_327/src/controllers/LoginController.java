@@ -65,9 +65,12 @@ public class LoginController implements Initializable {
     private JFXButton btnSignin;
     
     /// -- 
+   
     
-    /**  Login Credentials **/
-    String LOGIN_CREDENTIALS = "Me";
+    
+      private static final String[] DUMMY_CREDENTIALS = new String[] {
+            "admin:admin", "me:me"
+    };
 
     
 
