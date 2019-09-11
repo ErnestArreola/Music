@@ -8,11 +8,13 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Music_Player_327.jar" size="16308645" download="eager" />
+    <jar href="Music_Player_327.jar" size="16317247" download="eager" />
     <jar href="lib/controlsfx-8.40.15.jar" size="1402490" download="eager" />
     <jar href="lib/fontawesomefx-commons-8.15.jar" size="20957" download="eager" />
     <jar href="lib/fontawesomefx-fontawesome-4.7.0-5.jar" size="136891" download="eager" />
+    <jar href="lib/gson-2.8.5.jar" size="241622" download="eager" />
     <jar href="lib/jfoenix-8.0.8.jar" size="2708772" download="eager" />
+    <jar href="lib/jl1.0.1.jar" size="105363" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Music_Player_327" >
     <param name="requiredFXVersion" value="8.0+"/>
