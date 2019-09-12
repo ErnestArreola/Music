@@ -11,10 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- *
- * @author AppleSauce
- */
+
 public class Music_Player_327 extends Application {
     
     @Override

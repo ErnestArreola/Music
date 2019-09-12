@@ -100,7 +100,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="81.0" prefWidth="414.0" styleClass="ro" stylesheets="@../css/constraints.css">
                            <children>
-                              <ImageView fitHeight="57.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="57.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" styleClass="border-round">
                                  <HBox.margin>
                                     <Insets left="10.0" right="10.0" />
                                  </HBox.margin>
