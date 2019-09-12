@@ -22,7 +22,7 @@
 .menu_item:hover {
 	-fx-background-color:#ffffff;
 	-fx-border-width:0 0 0 4px;
-	-fx-border-color: #6583fe;
+	-fx-border-color: #4160A3;
 	-fx-cursor:hand;
 	-fx-fill:white;
 }
@@ -30,3 +30,11 @@
 .menu_item:hover FontAwesomeIcon, .menu_item:hover Text {
 	-fx-fill: #6583fe;
 }
+
+.album_art:hover {
+    	-fx-background-color:#ffffff;
+	-fx-border-width:0 0 0 4px;
+	-fx-border-color: #4160A3;
+	-fx-cursor:hand;
+}
+

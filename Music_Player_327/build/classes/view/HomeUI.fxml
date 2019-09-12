@@ -6,16 +6,20 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -23,14 +27,14 @@
    <children>
       <HBox prefHeight="567.0" prefWidth="1200.0">
          <children>
-            <VBox prefHeight="541.0" prefWidth="191.0" style="-fx-background-color: #E8EAEF;" stylesheets="@../css/styles.css">
+            <VBox prefHeight="541.0" prefWidth="191.0" style="-fx-background-color: #FAFAFB;" styleClass="sidebar" stylesheets="@../css/styles.css">
                <children>
                   <HBox fx:id="Home_Box" alignment="CENTER_LEFT" onMouseClicked="#handleClicks" prefHeight="50.0" prefWidth="182.0">
                      <VBox.margin>
-                        <Insets top="50.0" />
+                        <Insets top="80.0" />
                      </VBox.margin>
                      <children>
-                        <FontAwesomeIconView glyphName="HOME" size="25">
+                        <FontAwesomeIconView fill="#aeaeae" glyphName="HOME" size="25">
                            <HBox.margin>
                               <Insets left="25.0" right="10.0" />
                            </HBox.margin>
@@ -50,11 +54,12 @@
                      <styleClass>
                         <String fx:value="padding-10" />
                         <String fx:value="menu_item" />
+                        <String fx:value="active" />
                      </styleClass>
                   </HBox>
                   <HBox fx:id="Box_Browse" alignment="CENTER_LEFT" onMouseClicked="#handleClicks" prefHeight="50.0" prefWidth="182.0">
                      <children>
-                        <FontAwesomeIconView glyphName="HOME" size="25">
+                        <FontAwesomeIconView fill="#c6c6c6" glyphName="HOME" size="25">
                            <HBox.margin>
                               <Insets left="25.0" right="10.0" />
                            </HBox.margin>
@@ -80,72 +85,286 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
+                  <ScrollPane fx:id="Scrollpane" hbarPolicy="NEVER" pannable="true" prefHeight="347.0" prefWidth="185.0" style="-fx-background-color: #FAFAFB;" stylesheets="@../css/ScrollPane.css">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="362.0" prefWidth="200.0" style="-fx-background-color: #FAFAFB; -fx-region-border: #FAFAFB;">
+                           <opaqueInsets>
+                              <Insets top="10.0" />
+                           </opaqueInsets>
+                           <children>
+                              <ListView layoutY="71.0" prefHeight="279.0" prefWidth="200.0" style="-fx-background-color: #FAFAFB;" />
+                              <HBox alignment="CENTER_LEFT" prefHeight="81.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="Playlist">
+                                       <font>
+                                          <Font name="Roboto Regular" size="14.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="40.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ScrollPane>
                </children></VBox>
             <VBox prefHeight="541.0" prefWidth="830.0">
                <children>
-                  <HBox prefHeight="87.0" prefWidth="858.0" style="-fx-background-color: #E8EAEF;">
+                  <HBox prefHeight="87.0" prefWidth="858.0" style="-fx-background-color: #FAFAFB;">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="87.0" prefWidth="421.0">
-                           <children>
-                              <TextField promptText="Search">
-                                 <HBox.margin>
-                                    <Insets right="40.0" />
-                                 </HBox.margin>
-                              </TextField>
-                           </children>
+                        <HBox alignment="CENTER" prefHeight="33.0" prefWidth="418.0">
                            <stylesheets>
                               <URL value="@../css/styles.css" />
                               <URL value="@../css/constraints.css" />
                            </stylesheets>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="81.0" prefWidth="414.0">
                            <children>
-                              <MenuButton alignment="CENTER" contentDisplay="CENTER" graphicTextGap="6.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="25.0" style="-fx-background-color: #E8EAEF;">
+                              <Pane prefHeight="81.0" prefWidth="305.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" layoutY="21.0" prefHeight="27.0" prefWidth="175.0" style="-fx-background-color: #c7c7c791;" styleClass="round">
+                                       <children>
+                                          <FontAwesomeIconView glyphName="SEARCH" styleClass="fill-dark_grey">
+                                             <HBox.margin>
+                                                <Insets left="10.0" right="10.0" />
+                                             </HBox.margin>
+                                          </FontAwesomeIconView>
+                                          <TextField fx:id="search" onKeyTyped="#handleSearch" prefHeight="32.0" prefWidth="122.0" promptText="Search">
+                                             <HBox.margin>
+                                                <Insets right="40.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                             <styleClass>
+                                                <String fx:value="white" />
+                                                <String fx:value="transparent" />
+                                                <String fx:value="fill-white" />
+                                             </styleClass>
+                                          </TextField>
+                                       </children>
+                                       <stylesheets>
+                                          <URL value="@../css/styles.css" />
+                                          <URL value="@../css/colors.css" />
+                                          <URL value="@../css/constraints.css" />
+                                       </stylesheets>
+                                    </HBox>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="81.0" prefWidth="414.0" styleClass="ro" stylesheets="@../css/constraints.css">
+                           <children>
+                              <ImageView fitHeight="42.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="border-round">
+                                 <HBox.margin>
+                                    <Insets left="200.0" right="10.0" />
+                                 </HBox.margin>
+                                 <image>
+                                    <Image url="@../images/default-user-avatar.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="Account_Name" strokeType="OUTSIDE" strokeWidth="0.0" text="User">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <MenuButton fx:id="SettingsDropDown" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="6.0" mnemonicParsing="false" onMouseClicked="#handelMenu" prefHeight="40.0" prefWidth="25.0" style="-fx-background-color: #FCFDFD;">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" text="Action 1" />
-                                    <MenuItem mnemonicParsing="false" text="Action 2" />
+                                    <MenuItem mnemonicParsing="false" text="Account" />
+                                    <MenuItem fx:id="Menu_Settings" mnemonicParsing="false" onAction="#handleSubMenu" text="Settings" />
                                  </items>
                                  <font>
                                     <Font size="20.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
                               </MenuButton>
                            </children>
                         </HBox>
-                     </children></HBox>
+                     </children>
+                     <effect>
+                        <DropShadow height="0.5" radius="0.0" width="0.5" />
+                     </effect></HBox>
                   <StackPane prefHeight="467.0" prefWidth="858.0">
                      <children>
-                        <Pane fx:id="Home_Panel" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                        <ScrollPane fx:id="Browser" pannable="true" prefHeight="856.0" prefWidth="830.0" style="-fx-background-color: #D0DEE3;">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="845.0" prefWidth="810.0">
+                                 <children>
+                                    <Text layoutX="18.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Browse">
+                                       <font>
+                                          <Font name="Roboto Bold" size="35.0" />
+                                       </font>
+                                    </Text>
+                                    <HBox layoutX="15.0" layoutY="258.0" prefHeight="174.0" prefWidth="780.0">
+                                       <children>
+                                          <Pane prefHeight="200.0" prefWidth="190.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/styles.css">
+                                             <children>
+                                                <ImageView fitHeight="126.0" fitWidth="149.0" layoutX="11.0" layoutY="16.0" pickOnBounds="true" styleClass="active">
+                                                   <effect>
+                                                      <DropShadow />
+                                                   </effect>
+                                                </ImageView>
+                                                <Label layoutX="72.0" layoutY="152.0" text="Label">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets right="30.0" />
+                                             </HBox.margin>
+                                          </Pane>
+                                          <Pane prefHeight="200.0" prefWidth="190.0" style="-fx-background-color: #ffffff;">
+                                             <HBox.margin>
+                                                <Insets right="30.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <ImageView fitHeight="126.0" fitWidth="149.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true">
+                                                   <effect>
+                                                      <DropShadow height="5.82" radius="2.41" width="5.82" />
+                                                   </effect>
+                                                </ImageView>
+                                                <Label layoutX="71.0" layoutY="152.0" text="Label">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font></Label>
+                                             </children>
+                                          </Pane>
+                                          <Pane prefHeight="200.0" prefWidth="190.0" style="-fx-background-color: #ffffff;">
+                                             <children>
+                                                <ImageView fitHeight="127.0" fitWidth="149.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true">
+                                                   <effect>
+                                                      <DropShadow height="5.82" radius="2.41" width="5.82" />
+                                                   </effect>
+                                                </ImageView>
+                                                <Label layoutX="65.0" layoutY="151.0" text="Label">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets right="30.0" />
+                                             </HBox.margin>
+                                          </Pane>
+                                          <Pane prefHeight="200.0" prefWidth="190.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/styles.css">
+                                             <children>
+                                                <ImageView fitHeight="129.0" fitWidth="149.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true">
+                                                   <effect>
+                                                      <DropShadow height="5.82" radius="2.41" width="5.82" />
+                                                   </effect>
+                                                </ImageView>
+                                                <Label layoutX="70.0" layoutY="151.0" text="Label">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </Pane>
+                                       </children>
+                                    </HBox>
+                                    <Line endX="633.0" endY="1.52587890625E-5" layoutX="161.0" layoutY="235.0" opacity="0.29" startX="-145.3589324951172" strokeWidth="0.25" />
+                                    <Text layoutX="18.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Top Tracks">
+                                       <font>
+                                          <Font name="Roboto Bold" size="16.0" />
+                                       </font>
+                                    </Text>
+                                 </children></AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <ScrollPane fx:id="Settings_Pane" prefHeight="200.0" prefWidth="200.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox layoutX="-3.0" layoutY="-1.0" prefHeight="459.0" prefWidth="834.0">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
+                                                   <HBox.margin>
+                                                      <Insets left="35.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font name="Roboto Regular" size="30.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <Pane fx:id="Home_Panel" onMouseClicked="#handleClicks" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #D9DFE4;">
                            <children>
-                              <Label text="Home" />
+                              <Label text="Home" textFill="WHITE">
+                                 <font>
+                                    <Font size="67.0" />
+                                 </font></Label>
+                              <Pane layoutX="276.0" layoutY="131.0" prefHeight="84.0" prefWidth="217.0" style="-fx-background-color: #ffffff;" />
                            </children>
                         </Pane>
-                        <Pane fx:id="Browser" onMouseClicked="#handleClicks" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
-                           <children>
-                              <Label text="Browse" />
-                           </children>
-                        </Pane>
+                        <ScrollPane fx:id="Search_Pane" prefHeight="200.0" prefWidth="200.0">
+                           <content>
+                              <VBox prefHeight="456.0" prefWidth="826.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Songs">
+                                             <HBox.margin>
+                                                <Insets left="30.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="Roboto Regular" size="22.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
+                                             <HBox.margin>
+                                                <Insets right="300.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Artist" />
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <ListView prefHeight="100.0" prefWidth="826.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
                      </children></StackPane>
                </children>
             </VBox>
          </children>
       </HBox>
-      <HBox prefHeight="106.0" prefWidth="600.0" style="-fx-background-color: #E8EAEF;">
+      <HBox prefHeight="106.0" prefWidth="600.0" style="-fx-background-color: #FCFDFD;">
          <children>
             <Pane prefHeight="80.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="63.0" fitWidth="108.0" layoutX="17.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="74.0" fitWidth="102.0" layoutX="21.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/mark-solarski-T3mKJXfdims-unsplash.jpg" />
                      </image>
-                     <effect>
-                        <DropShadow height="11.89" radius="5.445" width="11.89" />
-                     </effect>
                   </ImageView>
                </children>
             </Pane>
             <Pane prefHeight="80.0" prefWidth="838.0">
                <children>
-                  <HBox alignment="CENTER" layoutX="194.0" layoutY="-3.0" prefHeight="84.0" prefWidth="289.0" stylesheets="@../css/constraints.css">
+                  <HBox alignment="CENTER" layoutX="194.0" layoutY="-3.0" prefHeight="84.0" prefWidth="289.0">
                      <children>
                         <FontAwesomeIconView glyphName="ANGLE_DOUBLE_LEFT" size="25">
                            <HBox.margin>
@@ -156,10 +375,6 @@
                            <HBox.margin>
                               <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                            </HBox.margin>
-                           <styleClass>
-                              <String fx:value="border-round" />
-                              <String fx:value="round" />
-                           </styleClass>
                         </FontAwesomeIconView>
                         <FontAwesomeIconView glyphName="ANGLE_DOUBLE_RIGHT" size="25">
                            <HBox.margin>
@@ -167,6 +382,11 @@
                            </HBox.margin>
                         </FontAwesomeIconView>
                      </children>
+                     <stylesheets>
+                        <URL value="@../css/constraints.css" />
+                        <URL value="@../css/colors.css" />
+                        <URL value="@../css/styles.css" />
+                     </stylesheets>
                   </HBox>
                   <FontAwesomeIconView glyphName="VOLUME_UP" layoutX="619.0" layoutY="48.0" size="20" />
                   <JFXSlider layoutX="647.0" layoutY="33.0" />
@@ -174,6 +394,10 @@
                   <Text layoutX="6.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
                </children>
             </Pane>
-         </children></HBox>
+         </children>
+         <effect>
+            <DropShadow height="2.79" radius="1.6524999999999999" width="5.82" />
+         </effect>
+      </HBox>
    </children>
 </VBox>
