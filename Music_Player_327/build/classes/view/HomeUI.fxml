@@ -10,6 +10,8 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -92,7 +94,7 @@
                               <Insets top="10.0" />
                            </opaqueInsets>
                            <children>
-                              <ListView layoutY="71.0" prefHeight="279.0" prefWidth="200.0" style="-fx-background-color: #FAFAFB;" />
+                              <ListView fx:id="playlist_view" layoutY="71.0" prefHeight="279.0" prefWidth="200.0" style="-fx-background-color: #FAFAFB;" />
                               <HBox alignment="CENTER_LEFT" prefHeight="81.0" prefWidth="200.0">
                                  <children>
                                     <Label text="Playlist">
@@ -112,7 +114,39 @@
                         <Insets />
                      </opaqueInsets>
                   </ScrollPane>
-               </children></VBox>
+                  <Pane prefHeight="112.0" prefWidth="191.0">
+                     <children>
+                        <HBox fx:id="Box_Playlist" alignment="CENTER_LEFT" layoutX="10.0" layoutY="4.0" onMouseClicked="#handleClicks" prefHeight="52.0" prefWidth="171.0" style="-fx-background-color: #63a9d4; -fx-background-radius: 10;" styleClass="button">
+                           <children>
+                              <FontAwesomeIconView fill="WHITE" glyphName="MUSIC" size="15">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                              <Line endX="-100.00013732910156" endY="-28.672744750976562" opacity="0.45" startX="-100.0" stroke="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Line>
+                              <Label text="New Playlist" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <effect>
+                              <DropShadow color="#c3bcbc" />
+                           </effect>
+                        </HBox>
+                     </children>
+                  </Pane>
+               </children>
+               <effect>
+                  <DropShadow color="WHITE" />
+               </effect></VBox>
             <VBox prefHeight="541.0" prefWidth="830.0">
                <children>
                   <HBox prefHeight="87.0" prefWidth="858.0" style="-fx-background-color: #FAFAFB;">
@@ -132,7 +166,7 @@
                                                 <Insets left="10.0" right="10.0" />
                                              </HBox.margin>
                                           </FontAwesomeIconView>
-                                          <TextField fx:id="search" onKeyTyped="#handleSearch" prefHeight="32.0" prefWidth="122.0" promptText="Search">
+                                          <TextField fx:id="search" onKeyReleased="#handleSearches" onKeyTyped="#handleSearch" prefHeight="32.0" prefWidth="122.0" promptText="Search">
                                              <HBox.margin>
                                                 <Insets right="40.0" />
                                              </HBox.margin>
@@ -302,6 +336,25 @@
                               </AnchorPane>
                           </content>
                         </ScrollPane>
+                        <ScrollPane fx:id="Search_Pane" pannable="true" prefHeight="200.0" prefWidth="200.0">
+                           <content>
+                              <AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="musicLibrary" prefHeight="452.0" prefWidth="821.0" tableMenuButtonVisible="true">
+                                       <columns>
+                                          <TableColumn fx:id="songID" prefWidth="184.0" text="Column X" />
+                                          <TableColumn fx:id="songTitle" prefWidth="134.0" text="C1" />
+                                          <TableColumn fx:id="artist" prefWidth="157.0" text="C2" />
+                                          <TableColumn fx:id="songDuration" prefWidth="317.0" text="Column X" />
+                                       </columns>
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
                         <Pane fx:id="Home_Panel" onMouseClicked="#handleClicks" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #D9DFE4;">
                            <children>
                               <Label text="Home" textFill="WHITE">
@@ -311,41 +364,6 @@
                               <Pane layoutX="276.0" layoutY="131.0" prefHeight="84.0" prefWidth="217.0" style="-fx-background-color: #ffffff;" />
                            </children>
                         </Pane>
-                        <ScrollPane fx:id="Search_Pane" prefHeight="200.0" prefWidth="200.0">
-                           <content>
-                              <VBox prefHeight="456.0" prefWidth="826.0">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Songs">
-                                             <HBox.margin>
-                                                <Insets left="30.0" />
-                                             </HBox.margin>
-                                             <font>
-                                                <Font name="Roboto Regular" size="22.0" />
-                                             </font>
-                                          </Text>
-                                       </children>
-                                    </HBox>
-                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
-                                             <HBox.margin>
-                                                <Insets right="300.0" />
-                                             </HBox.margin>
-                                          </Text>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Artist" />
-                                       </children>
-                                    </HBox>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <ListView prefHeight="100.0" prefWidth="826.0" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </content>
-                        </ScrollPane>
                      </children></StackPane>
                </children>
             </VBox>
@@ -364,14 +382,14 @@
             </Pane>
             <Pane prefHeight="80.0" prefWidth="838.0">
                <children>
-                  <HBox alignment="CENTER" layoutX="194.0" layoutY="-3.0" prefHeight="84.0" prefWidth="289.0">
+                  <HBox alignment="CENTER" layoutX="194.0" layoutY="-3.0" prefHeight="84.0" prefWidth="289.0" stylesheets="@../css/styles.css">
                      <children>
                         <FontAwesomeIconView glyphName="ANGLE_DOUBLE_LEFT" size="25">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>
                         </FontAwesomeIconView>
-                        <FontAwesomeIconView glyphName="PAUSE" size="25">
+                        <FontAwesomeIconView fx:id="playpauseIcon" fill="#63a9d4" glyphName="PLAY_CIRCLE" onMouseClicked="#handlePlayClick" size="30" styleClass="glyph-icon">
                            <HBox.margin>
                               <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
                            </HBox.margin>
@@ -382,11 +400,6 @@
                            </HBox.margin>
                         </FontAwesomeIconView>
                      </children>
-                     <stylesheets>
-                        <URL value="@../css/constraints.css" />
-                        <URL value="@../css/colors.css" />
-                        <URL value="@../css/styles.css" />
-                     </stylesheets>
                   </HBox>
                   <FontAwesomeIconView glyphName="VOLUME_UP" layoutX="619.0" layoutY="48.0" size="20" />
                   <JFXSlider layoutX="647.0" layoutY="33.0" />
