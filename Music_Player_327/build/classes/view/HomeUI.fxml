@@ -88,11 +88,12 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="87.0" prefWidth="421.0">
                            <children>
-                              <TextField promptText="Search">
+                              <TextField fx:id="input" promptText="Search">
                                  <HBox.margin>
                                     <Insets right="40.0" />
                                  </HBox.margin>
                               </TextField>
+                              <FontAwesomeIconView fx:id="search" glyphName="SEARCH" size="15.0" />
                            </children>
                            <stylesheets>
                               <URL value="@../css/styles.css" />
@@ -139,7 +140,7 @@
                         <Pane fx:id="Browser" onMouseClicked="#handleClicks" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
                            <children>
                               <Label text="Browse" />
-                              <JFXTreeTableView fx:id="tableview" layoutX="14.0" layoutY="9.0" prefHeight="449.0" prefWidth="725.0" />
+                              <JFXTreeTableView fx:id="tableview" layoutY="-2.0" prefHeight="467.0" prefWidth="830.0" />
                            </children>
                         </Pane>
                      </children></StackPane>
