@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.lang.String?>
 <?import java.net.URL?>
@@ -138,6 +139,7 @@
                         <Pane fx:id="Browser" onMouseClicked="#handleClicks" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
                            <children>
                               <Label text="Browse" />
+                              <JFXTreeTableView fx:id="tableview" layoutX="14.0" layoutY="9.0" prefHeight="449.0" prefWidth="725.0" />
                            </children>
                         </Pane>
                      </children></StackPane>
