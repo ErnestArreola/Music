@@ -8,26 +8,20 @@ package controllers;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import music_player_327.Song;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import music_player_327.JsonReadFile;
 import music_player_327.Song;
 
 /**
@@ -80,15 +74,15 @@ public class HomeUIController implements Initializable {
         time.setResizable(false);
         
         data = FXCollections.observableArrayList(
-        new Song("111iii","Lili","title1","time1")
+        new Song("testid","testArtist","testTitle","testTime")
         );
         
-        Song s1 = new Song("22221wwww", "AMIT", "Ti", "time2");
-        Song s2 = new Song( "3332sssa", "Peter", "eee", "time3");
-        Song s3 = new Song( "3312sss", "SAM", "www", "time4");
-        Song s4 = new Song("33sssdc", "Jhon", "ffff", "time5");                   
-           
-        data.addAll(s1,s2,s3, s4);
+        JsonReadFile reader = new JsonReadFile();
+        ArrayList<Song> Songs = reader.Parser();
+        for(int i = 0; i<Songs.size();i++){
+            data.add(Songs.get(i));
+//            System.out.println(Songs.get(i).getArtist());
+        }
         
         ID.setCellValueFactory(
             new TreeItemPropertyValueFactory<Song,String>("ID")
@@ -109,10 +103,8 @@ public class HomeUIController implements Initializable {
         
         tableview.setRoot(root);
         tableview.setShowRoot(false);
-    }  
-    
-    
-    
+    } 
+ 
         
     public void handleClicks(MouseEvent Event) {
         if (Event.getSource() == Home_Box) {
