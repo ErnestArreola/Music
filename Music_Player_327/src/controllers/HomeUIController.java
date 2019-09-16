@@ -11,10 +11,16 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
@@ -51,6 +57,8 @@ public class HomeUIController implements Initializable {
     
     @FXML
     private JFXTreeTableView tableview;
+    @FXML
+    private TextField input ;
    
     ObservableList<Song> data;
     
@@ -103,6 +111,21 @@ public class HomeUIController implements Initializable {
         
         tableview.setRoot(root);
         tableview.setShowRoot(false);
+        
+        input.textProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                tableview.setPredicate(new Predicate<TreeItem<Song>>(){
+                    @Override
+                    public boolean test(TreeItem<Song> song) {
+                        String lowerCaseFilter = newValue.toLowerCase();
+                        Boolean flag = song.getValue().getArtist().toLowerCase().contains(lowerCaseFilter) || song.getValue().getID().toLowerCase().contains(lowerCaseFilter)||song.getValue().getTitle().toLowerCase().contains(lowerCaseFilter);
+                        return flag;
+                    }
+                });
+            }
+            
+        });
     } 
  
         
