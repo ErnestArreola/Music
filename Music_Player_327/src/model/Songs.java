@@ -5,13 +5,29 @@
  */
 package model;
 
+
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 /**
  *
  * @author AppleSauce
  */
 public class Songs {
+    public float duration;
+    public float hotttnesss;
     public String title;
     
-    public Songs(){}
+    public Songs() {
+    //this.title = new SimpleStringProperty(title);
+    }
     
+    
+        public String getTitle(){
+        return title;
+        }
+            
+
+   
+   
 }

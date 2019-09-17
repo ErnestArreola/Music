@@ -18,7 +18,7 @@ public class Song {
     private final SimpleStringProperty songTitle;
     private final SimpleStringProperty songDuration;
     
-    public Song(String id, String artist, String Title, String duration){
+    public Song(String id, String artist, String Title, String duration) {
         this.songID = new SimpleStringProperty(id);
         this.artist = new SimpleStringProperty(artist);
         this.songTitle = new SimpleStringProperty(Title);

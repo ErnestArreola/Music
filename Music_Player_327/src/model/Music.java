@@ -7,15 +7,34 @@ package model;
 
 import java.util.List;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 /**
  *
  * @author AppleSauce
  */
 public class Music {
     
-    public Album release;
-    public Artist artist;
-    public Songs song;
+    private Album release;
+    private Artist artist;
+    private Songs song;
+    
+    
+        public Music(){
+        
+        
+        }
+        
+        public Songs getSong(){
+        return song;
+        }
+        
+        public Artist getArtist(){
+        return artist;
+        }
+        
+       
+
     
     
 //    public static class Albums {
@@ -48,5 +67,4 @@ public class Music {
 //    //return release.get(0).getName();
 //    }
     
-    public Music(){}
 }

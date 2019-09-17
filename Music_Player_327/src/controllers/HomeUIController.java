@@ -22,9 +22,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.sun.deploy.util.SessionState.Client;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -37,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -45,17 +50,23 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
+import javax.imageio.ImageIO;
 import javazoom.jl.decoder.JavaLayerException;
 import model.Album;
 import model.Artist;
 import model.Music;
 import model.Something;
 import model.Song;
+import model.Songs;
+
 
 
 /**
@@ -71,7 +82,7 @@ public class HomeUIController implements Initializable {
      * 
      */
     
-@FXML
+    @FXML
     private HBox Home_Box;
 
     @FXML
@@ -107,38 +118,56 @@ public class HomeUIController implements Initializable {
     @FXML
     private Pane Home_Panel;
     
+    @FXML
+    private Pane topTrack1;
+
      private User currentUser;
      
      private String file = "";
      
      private FileInputStream input = null;
      
-      private MusicPlayer player = null;
+      
+     private MusicPlayer player = null;
+      
+    @FXML
+    private ImageView album_art;
+
+
+    @FXML
+    private Text artist_info;
+
+    @FXML
+    private Text album_info;
       
     @FXML 
     private TextField tableFilter;
     
+    List<Music> musicList = new ArrayList();
     
     @FXML
-     private TableView<Song> musicLibrary;
+     private TableView<Music> musicLibrary;
     
-    @FXML private TableColumn<Song, String> songID;
-    @FXML private TableColumn<Song, String> artist;
-    @FXML private TableColumn<Song, String> songTitle;
-    @FXML private TableColumn<Song, String> songDuration;
-    
+        
+    @FXML private TableColumn  title = new TableColumn("title");
+        
+    @FXML private TableColumn  artist = new TableColumn("artist");
 
-    private final ObservableList<Song> dataList = FXCollections.observableArrayList();
-     
-     
-        FileReader files = null;
+    
+//    @FXML private TableColumn Music name;
+//    @FXML private TableColumn<Artist, String> names;   
+
+    private final ObservableList<Music> dataList = FXCollections.observableArrayList();
+    
+    FileReader files = null;
+    
     @FXML
-    private ListView<?> playlist_view;
+    private ListView<String> playlist_view;
+    
     @FXML
     private FontAwesomeIconView playpauseIcon;
     
    
-    
     
     @FXML
     void handlePlayClick(MouseEvent event) {
@@ -157,14 +186,7 @@ public class HomeUIController implements Initializable {
 
     @FXML
     void handleSearch(KeyEvent event) {
-        if (search.getText() == null || search.getText().trim().isEmpty()) {
-            Home_Panel.toFront();
-        
-        }
-//        else if(search.getText() != null){
-//            Search_Pane.toFront();
-//        }
-
+//
     }
     
 
@@ -181,51 +203,36 @@ public class HomeUIController implements Initializable {
 
     }
 
-       
-           // private MusicPlayer player = new MusicPlayer();
-            
-             Thread thread = new Thread();
-             
+                               
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
          Scrollpane.setHbarPolicy(ScrollBarPolicy.NEVER);
          Scrollpane.setVbarPolicy(ScrollBarPolicy.NEVER);   
-        callMe();
-        callSearch();
-
-//            bufReader.mark(10);   
-//            if(bufReader.read() != -1){
-//                bufReader.reset();
-//                Type listType = new TypeToken<List<Music>>() {}.getType();
-//                userList = gson.fromJson(bufReader, listType); 
-//                            System.out.println("CAMILLA!");
-//            }
-//            else{
-//                System.err.println("No user account was created!");
-//            }
-//            bufReader.close();
-
-    
+         
+         addMusicToList();
+         callSearch();
 
     }    
     
     public void setCurrentUser(User current) {
+        if(current != null) {
           this.currentUser =  current;
                    Account_Name.setText(currentUser.getFirstName());
+        }
 
     }
     
-    void callMe() {        
+    //Takes the Music json and deserializes to Classes
+    void addMusicToList() {        
         try{
         BufferedReader bufReader;
-        bufReader = new BufferedReader(new FileReader("src/files/newjson.json"));
+        bufReader = new BufferedReader(new FileReader("src/files/music.json"));
         bufReader.mark(10);
-        
+    
        Type REVIEW_TYPE = new TypeToken<ArrayList<Music>>(){}.getType();        
 //             BufferedReader br = new BufferedReader(new FileReader("src/files/music.json"));
-        List<Music> userList  = new Gson().fromJson(bufReader, REVIEW_TYPE);
-        System.out.println(userList);
+        musicList  = new Gson().fromJson(bufReader, REVIEW_TYPE);
         }catch (Exception ex){}
 }
     
@@ -235,10 +242,36 @@ public class HomeUIController implements Initializable {
     void handleSubMenu(ActionEvent event) {
         //Settings_Pane.toFront();
        // callMusicPlayer();
-               try {
+
+
+       
+    }
+    
+    @FXML
+    void handelMenu(MouseEvent event) {
+        if(event.getSource() == Menu_Settings) {
+      }
+     
+    }
+    
+    //Handles the panes from brows under Top Tracks. Will play music if clicked.
+     @FXML
+    void handleTop(MouseEvent event)  {
+         if(event.getSource() == topTrack1) {
+         nowPlaying("imperial.mp3");
+         }
+    }
+    
+   private void nowPlaying(String fil) {
+      //Null Check
+       if(fil != null) {
+       file = fil;
+       if(file != "") {
+       playpauseIcon.setIcon(FontAwesomeIcon.PAUSE);
+           try {
               input = new FileInputStream(file); 
               player = new MusicPlayer(input);
-          
+              playMusic();
 	     }
 	     catch (JavaLayerException exception) 
          {
@@ -248,40 +281,38 @@ public class HomeUIController implements Initializable {
          {
              exception.printStackTrace();
          }
-
-       
-    }
+       }
+       else if(playpauseIcon.getGlyphName().equals("PAUSE")){
+               playpauseIcon.setIcon(FontAwesomeIcon.PLAY);
+               pauseMusic();
+       }
+       }
+   
+   
+   }
     
-    @FXML
-    void handelMenu(MouseEvent event) {
-        if(event.getSource() == Menu_Settings) {
-      }
-
-    }
     
-    
-        
+        //Anytime you click on the sidebar (Hbox) the relevant pane will be brought up in the middle.
     @FXML
         public void handleClicks(MouseEvent Event) {
         if (Event.getSource() == Home_Box) {
             Home_Panel.setStyle("-fx-background-color : #ffffff");
             Home_Panel.toFront();
-            System.out.println(currentUser.getFirstName());
         }
 //        
         
         if (Event.getSource() == Box_Browse) {
-            System.out.println("HELLO!!!!!!");
             Browser.setStyle("-fx-background-color : #ffffff");
             Browser.toFront();
         }
         
         if (Event.getSource() == Box_Playlist) {
-            currentUser.addPlaylist("Ok");
         }
      
     }
         
+        
+        //Calls an object of the Player Class
         void playMusic() {
          try {
 
@@ -291,9 +322,7 @@ public class HomeUIController implements Initializable {
              e.printStackTrace();
          }
          
-      
         }
-        
         
          void pauseMusic() {
          try {
@@ -331,21 +360,27 @@ public class HomeUIController implements Initializable {
  void callSearch() {
             // TODO
             
-        songID.setCellValueFactory(new PropertyValueFactory<>("songID"));       
-        artist.setCellValueFactory(new PropertyValueFactory<>("artist"));        
-        songTitle.setCellValueFactory(new PropertyValueFactory<>("songTitle"));        
-        songDuration.setCellValueFactory(new PropertyValueFactory<>("songDuration"));             
+        title.setCellValueFactory(new Callback<CellDataFeatures<Music, String>, ObservableValue<String>>() {
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<Music, String> c) {
+            return new SimpleStringProperty(c.getValue().getSong().getTitle());                
+        }
+        });
         
+        artist.setCellValueFactory(new Callback<CellDataFeatures<Music, String>, ObservableValue<String>>() {
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<Music, String> d) {
+            return new SimpleStringProperty(d.getValue().getArtist().getName());                
+        }
+        });
         
-        Song s1 = new Song("111", "AMIT", "Ti", "344");
-        Song s2 = new Song( "115", "Peter", "eee", "221");
-        Song s3 = new Song( "113", "SAM", "www", "eeee");
-        Song s4 = new Song("117", "Jhon", "ffff", "444");                   
-           
-        dataList.addAll(s1,s2,s3, s4);
-        
-        // Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<Song> filteredData = new FilteredList<>(dataList, b -> true);
+        dataList.addAll(musicList);
+
+       // musicLibrary.setItems(dataList);
+
+               
+//        // Wrap the ObservableList in a FilteredList (initially display all data).
+      FilteredList<Music> filteredData = new FilteredList<>(dataList, b -> false);
 		
 		// 2. Set the filter Predicate whenever the filter changes.
 		search.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -353,26 +388,24 @@ public class HomeUIController implements Initializable {
 				// If filter text is empty, display all persons.
 								
 				if (newValue == null || newValue.isEmpty()) {
-					return true;
+					return false;
 				}
 				
 				// Compare first name and last name of every person with filter text.
 				String lowerCaseFilter = newValue.toLowerCase();
 				
-				if (song.getArtist().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
+				if (song.getSong().getTitle().toLowerCase().indexOf(lowerCaseFilter) != -1 ) {
 					return true; // Filter matches first name.
-				} else if (song.getSongTitle().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+				} else if (song.getArtist().getName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
 					return true; // Filter matches last name.
 				}
-				else if (song.getSongID().toLowerCase().indexOf(lowerCaseFilter)!=-1)
-				     return true;
 				     else  
 				    	 return false; // Does not match.
 			});
 		});
 		
 		// 3. Wrap the FilteredList in a SortedList. 
-		SortedList<Song> sortedData = new SortedList<>(filteredData);
+		SortedList<Music> sortedData = new SortedList<>(filteredData);
 		
 		// 4. Bind the SortedList comparator to the TableView comparator.
 		// 	  Otherwise, sorting the TableView would have no effect.
@@ -380,7 +413,6 @@ public class HomeUIController implements Initializable {
 		
 		// 5. Add sorted (and filtered) data to the table.
 		musicLibrary.setItems(sortedData);
-  
 }
  
 }

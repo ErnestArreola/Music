@@ -13,7 +13,7 @@
 	-fx-background-insets:1;
 }
 
-.active {
+.menu_item: active {
 	-fx-background-color:#ffffff;
 	-fx-border-width:0 0 0 4px;
 	-fx-border-color: #6583fe;
@@ -40,11 +40,26 @@
 
 
 
-.glyph-icon:hover{
+/*.glyph-icon:hover{
      -fx-background-color: #383838;
-    -fx-scale-y: 1.3;
-    -fx-scale-x: 1.3;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
     -fx-fill: #000000
+}*/
+/*
+.play-icon:hover {
+    -glyph-name: "PLAY";
+    -fx-background-color: #383838;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+    -fx-fill: #000000
+    
+}*/
+
+.glyph-icon:hover{
+    -fx-scale-y: 1.2;
+    -fx-scale-x: 1.2;
+    -fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.2), 4, 0, 0, 0);
 }
 
 .button:hover FontAwesomeIcon {
