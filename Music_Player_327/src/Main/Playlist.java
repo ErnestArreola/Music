@@ -22,8 +22,14 @@ public class Playlist {
 //        songs = new ArrayList<>();
 //    }
 //    
-    public void addSong(playlistSongs song) {
-        songs.add(song);
+    public void addSong(playlistSongs so) {
+        if(songs == null){
+        songs = new ArrayList();
+        }
+        System.out.println("Heelof" + so.getTitle() );
+        songs.add(so);
+        System.out.println("Brf" + songs);
+
     }
 //    
 //    public ArrayList<String> getAllSongs(){
@@ -35,7 +41,7 @@ public class Playlist {
     }
     
     public List<playlistSongs> getSongs(){
-    return this.songs;
+    return songs;
     }
     
     
