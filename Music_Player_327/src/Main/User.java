@@ -45,6 +45,10 @@ public class User {
         return password;
     }
     
+    public ArrayList<Playlist> getPlaylist(){
+    return playlists;
+    }
+    
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -61,21 +65,21 @@ public class User {
         this.password = password;
     }
     
-    public void addPlaylist(String name){
-        playlists.add(new Playlist(name));
+    public void addPlaylist(Playlist play){
+        playlists.add(play);
     }
     
-    public void addSong(String playlistName, String songId){
-        
-        int i = 0;
-        for(Playlist playlist : playlists){
-            if(playlist.toString().equals(playlistName)){
-                break;
-            }
-            i++;
-        }
-        playlists.get(i).addSong(songId);
-    }
+//    public void addSong(String playlistName, String songId){
+//        
+//        int i = 0;
+//        for(Playlist playlist : playlists){
+//            if(playlist.toString().equals(playlistName)){
+//                break;
+//            }
+//            i++;
+//        }
+//        playlists.get(i).addSong(songId);
+//    }
     
     
     

@@ -17,11 +17,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import Main.MusicPlayer;
 import Main.CECS327InputStream;
+import Main.Playlist;
+import Main.Playlist.playlistSongs;
 import Main.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.jfoenix.controls.JFXButton;
 import com.sun.deploy.util.SessionState.Client;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -38,6 +41,7 @@ import java.lang.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
@@ -46,6 +50,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
@@ -53,8 +62,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -63,9 +74,12 @@ import javazoom.jl.decoder.JavaLayerException;
 import model.Album;
 import model.Artist;
 import model.Music;
-import model.Something;
 import model.Song;
 import model.Songs;
+
+
+    import javafx.scene.control.TextInputDialog;
+
 
 
 
@@ -81,6 +95,13 @@ public class HomeUIController implements Initializable {
      * 
      * 
      */
+    
+    
+        @FXML
+    private JFXButton loadMoreButton;
+        
+        @FXML
+    private Pane topTrack3;
     
     @FXML
     private HBox Home_Box;
@@ -102,6 +123,9 @@ public class HomeUIController implements Initializable {
     
     @FXML
     private Text Account_Name;
+    
+    
+
 
     @FXML
     private ScrollPane Browser;
@@ -148,26 +172,82 @@ public class HomeUIController implements Initializable {
     @FXML
      private TableView<Music> musicLibrary;
     
+    @FXML
+    private TableView<Music> Browse_Table;
+    
+        @FXML
+    private TableView<Playlist> Playlist_Table;
+    
+    
+     @FXML
+    private Label Playlist_Label;
+     
+      private TextInputDialog textDialog;
+
+    
         
     @FXML private TableColumn  title = new TableColumn("title");
         
     @FXML private TableColumn  artist = new TableColumn("artist");
+    
+    
+    @FXML private TableColumn  Title = new TableColumn("Title");
+        
+    @FXML private TableColumn  Artist = new TableColumn("Artist");
+    
+    @FXML private TableColumn  Album = new TableColumn("Album");
+    
+    
+        @FXML private TableColumn  Titles = new TableColumn("Titles");
+        
+    @FXML private TableColumn  Artists = new TableColumn("Artists");
+    
+    @FXML private TableColumn  Albums = new TableColumn("Albums");
+    
+    final ContextMenu contextMenu = new ContextMenu();
+    
+    MenuItem cut = new MenuItem("Cut");
+    
+    private int user_index;
+    
+    private int load_more = 0;
+    
+    private ContextMenu ct;
+    private MenuItem remove;
+    
+        @FXML
+    private ScrollPane playlist_pane;
+        
+           @FXML
+    private ListView<String> SongsInPlaylist;
+           
+               @FXML
+    private Text playlist_title;
+               
+                @FXML
+    private TableView<playlistSongs> playlistSong_View;
+
+    
+
 
     
 //    @FXML private TableColumn Music name;
 //    @FXML private TableColumn<Artist, String> names;   
 
     private final ObservableList<Music> dataList = FXCollections.observableArrayList();
+    private final ObservableList<Music> browseList = FXCollections.observableArrayList();
+        private final ObservableList<Playlist> playLists = FXCollections.observableArrayList();
+
+    private final ObservableList<playlistSongs> playList = FXCollections.observableArrayList();
+    
     
     FileReader files = null;
     
     @FXML
-    private ListView<String> playlist_view;
+    private ListView<Playlist> playlist_view;
     
     @FXML
     private FontAwesomeIconView playpauseIcon;
-    
-   
     
     @FXML
     void handlePlayClick(MouseEvent event) {
@@ -207,20 +287,62 @@ public class HomeUIController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         Scrollpane.setHbarPolicy(ScrollBarPolicy.NEVER);
-         Scrollpane.setVbarPolicy(ScrollBarPolicy.NEVER);   
-         
+//         Scrollpane.setHbarPolicy(ScrollBarPolicy.NEVER);
+//         Scrollpane.setVbarPolicy(ScrollBarPolicy.NEVER);
+         try{
          addMusicToList();
          callSearch();
-
+         callBrowse();
+        artist_info.setText("");
+        album_info.setText("");
+        addPlaylistListener();
+        
+           }catch (Exception ex){
+         }
     }    
     
-    public void setCurrentUser(User current) {
+    
+
+    
+    public void setCurrentUser(User current, int index) {
         if(current != null) {
           this.currentUser =  current;
                    Account_Name.setText(currentUser.getFirstName());
+                  user_index = index; 
         }
+        callBuildPlaylist();
+    }
+    
+    
 
+    
+    void callBuildPlaylist(){
+        playLists.addAll(currentUser.getPlaylist());
+        playlist_view.setItems(playLists);
+       
+        
+    playlist_view.setCellFactory(param -> new ListCell<Playlist>() {
+    @Override
+    protected void updateItem(Playlist item, boolean empty) {
+        super.updateItem(item, empty);
+
+        if (empty || item == null || item.getName() == null) {
+            setText(null);
+        } else {
+            setText(item.getName());
+        }
+    }
+});
+    }
+    
+        @FXML
+    void loadMoreClicked(MouseEvent event) {
+//        for(int x = load_more; x < (load_more+20); x++) {
+//        browseList.add(musicList.get(x));
+//        load_more++;
+//        System.out.println(load_more);
+//        Browse_Table.setItems(browseList);
+//        }
     }
     
     //Takes the Music json and deserializes to Classes
@@ -243,15 +365,67 @@ public class HomeUIController implements Initializable {
         //Settings_Pane.toFront();
        // callMusicPlayer();
 
-
        
+    }
+    
+    @FXML
+    void handlePlaylistClicks(MouseEvent event) {
+        
+         playlist_view.getSelectionModel().getSelectedItem().getName();
+         playlist_title.setText(currentUser.getPlaylist().get(playlist_view.getSelectionModel().getSelectedIndex()).getName());
+         callPlaylistTable(playlist_view.getSelectionModel().getSelectedIndex());
+//           playlist_pane.toFront();
+//        
+//      System.out.println(playlist_view.getSelectionModel().getSelectedItem().getName());
+      
     }
     
     @FXML
     void handelMenu(MouseEvent event) {
         if(event.getSource() == Menu_Settings) {
+
+
       }
      
+    }
+    
+        private void addPlaylistListener(){
+//        playlist_view.setOnMousePressed(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                
+//                if(event.isPrimaryButtonDown()){
+//                    //showSongsInPlaylist
+//                playlist_title.setText(currentUser.getPlaylist().get(playlist_view.getSelectionModel().getSelectedIndex()).getName());
+//                callPlaylistTable(playlist_view.getSelectionModel().getSelectedIndex());
+//                    playlist_pane.toFront();
+//                }
+//                else if(event.isSecondaryButtonDown()){
+//                    
+//                    //add remove action to right click on playlist
+//                    remove.setOnAction(new EventHandler<ActionEvent>() {
+//                        public void handle(ActionEvent t) {
+////                            String toRemove = playlist_view.getSelectionModel().getSelectedItem();
+////                            playlist_view.getItems().remove(playlist_view.getSelectionModel().getSelectedItem());
+////                            Browser.toFront();
+//                        }
+//                    });
+//                    ct.getItems().add(remove);
+//                    ct.show(playlist_view,event.getScreenX(),event.getScreenY());
+//                   
+//                }
+//               
+//            }
+//        });
+     
+    }
+        
+         private void showSongsInPlaylist(int playlistName){
+        Playlist playlist = currentUser.getPlaylist().get(playlistName);
+//        SongsInPlaylist.getItems().clear();
+//        for(String song : playlist.getAllSongs()){
+//            SongsInPlaylist.getItems().add(song);
+//        }
     }
     
     //Handles the panes from brows under Top Tracks. Will play music if clicked.
@@ -260,6 +434,9 @@ public class HomeUIController implements Initializable {
          if(event.getSource() == topTrack1) {
          nowPlaying("imperial.mp3");
          }
+//         if(event.getSource() == topTrack2) {
+//         nowPlaying("imperial.mp3");
+//         }
     }
     
    private void nowPlaying(String fil) {
@@ -307,9 +484,31 @@ public class HomeUIController implements Initializable {
         }
         
         if (Event.getSource() == Box_Playlist) {
+        
+            textDialog.getEditor().clear();
+            Optional<String> result = textDialog.showAndWait();
+//            if(result.isPresent()){
+//                Playlist newPlaylist = new Playlist();
+//                newPlaylist.setName(textDialog.getEditor().getText());
+//                playlist_view.getItems().add(newPlaylist);
+//                currentUser.addPlaylist(newPlaylist);
+//            }
+        
         }
      
     }
+
+        
+        
+    @FXML
+    void handleContextTop(ContextMenuEvent event) {
+
+
+        
+    }
+    
+    
+    
         
         
         //Calls an object of the Player Class
@@ -390,7 +589,7 @@ public class HomeUIController implements Initializable {
 				if (newValue == null || newValue.isEmpty()) {
 					return false;
 				}
-				
+				 
 				// Compare first name and last name of every person with filter text.
 				String lowerCaseFilter = newValue.toLowerCase();
 				
@@ -415,4 +614,125 @@ public class HomeUIController implements Initializable {
 		musicLibrary.setItems(sortedData);
 }
  
+     @FXML
+    void handleTableClick(MouseEvent event) {
+//      int index = Browse_Table.getItems().indexOf(Browse_Table.getSelectionModel().getSelectedItem());
+//      playlistSongs me;
+//      me = new playlistSongs(browseList.get(index).getSong().title, browseList.get(index).getArtist().getName(), browseList.get(index).getArtist().getName());
+//     // browseList.get(index).getSong().title, browseList.get(index).getArtist(), browseList.get(index).getArtist());
+//      
+//        //currentUser.getPlaylist().get(0).getSongs().get(0).setAlbum();
+//      // browseList.get(index).getArtist().getName();
+//      
+//      currentUser.getPlaylist().get(0).addSong(me);
+//      currentUser.getPlaylist().get(0).getSongs();
+//      
+//       
+//       Browse_Table.setOnMousePressed(new EventHandler<MouseEvent>() {
+//   @Override
+//   public void handle(MouseEvent event) {
+//       if (event.isSecondaryButtonDown()) {
+//           contextMenu.show(Browse_Table, event.getScreenX(), event.getScreenY());
+//           
+//       }
+//   }
+//});
+    }
+    
+    
+ 
+ void callBrowse(){
+         Title.setCellValueFactory(new Callback<CellDataFeatures<Music, String>, ObservableValue<String>>() {
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<Music, String> c) {
+            return new SimpleStringProperty(c.getValue().getSong().getTitle());                
+        }
+        });
+        
+        Artist.setCellValueFactory(new Callback<CellDataFeatures<Music, String>, ObservableValue<String>>() {
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<Music, String> d) {
+            return new SimpleStringProperty(d.getValue().getArtist().getName());                
+        }
+        });
+        
+        Album.setCellValueFactory(new Callback<CellDataFeatures<Music, String>, ObservableValue<String>>() {
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<Music, String> d) {
+            return new SimpleStringProperty(d.getValue().getArtist().getName());                
+        }
+        });
+        
+        
+        for(int x = 0 ; x < 20; x++) {
+        browseList.add(musicList.get(x));
+        load_more = x;
+        }
+        
+        
+        
+
+//        
+//        
+//
+//         Browse_Table.setItems(browseList);
+
+
+                  // browseList.addAll(musicList);
+
+       // musicLibrary.setItems(dataList);
+
+               
+//        // Wrap the ObservableList in a FilteredList (initially display all data).
+     // FilteredList<Music> filteredData = new FilteredList<>(dataList, b -> true);
+		
+		
+//		// 3. Wrap the FilteredList in a SortedList. 
+//		SortedList<Music> sortedData = new SortedList<>(filteredData);
+//		
+//		// 4. Bind the SortedList comparator to the TableView comparator.
+//		// 	  Otherwise, sorting the TableView would have no effect.
+//		sortedData.comparatorProperty().bind(Browse_Table.comparatorProperty());
+		
+		// 5. Add sorted (and filtered) data to the table.
+		Browse_Table.setItems(browseList);
+ 
+ }
+ 
+ 
+ 
+  void callPlaylistTable(int index) {
+       // playlistSongs me = new playlistSongs();
+        
+       // System.out.println(currentUser.getPlaylist().get(index).getSongs().indexOf());
+         Titles.setCellValueFactory(new Callback<CellDataFeatures<playlistSongs, String>, ObservableValue<String>>() {
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<playlistSongs, String> c) {
+            return new SimpleStringProperty(c.getValue().getTitle());                
+        }
+        });
+        
+        Artists.setCellValueFactory(new Callback<CellDataFeatures<playlistSongs, String>, ObservableValue<String>>() {
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<playlistSongs, String> d) {
+            return new SimpleStringProperty(d.getValue().getArtist());                
+        }
+        });
+        
+        Albums.setCellValueFactory(new Callback<CellDataFeatures<playlistSongs, String>, ObservableValue<String>>() {
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<playlistSongs, String> d) {
+            return new SimpleStringProperty(d.getValue().getAlbum());                
+        }
+        });
+        
+        
+       // playList.add()
+       playList.removeAll();
+       
+       
+       playList.setAll(currentUser.getPlaylist().get(index).getSongs());
+       playlistSong_View.setItems(playList);
+ 
+ }
 }

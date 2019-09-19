@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXPasswordField?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -20,7 +23,7 @@
                <children>
                   <ImageView fitHeight="583.0" fitWidth="758.0" pickOnBounds="true" preserveRatio="true" smooth="false">
                      <image>
-                        <Image url="@../images/adam-whitlock-I9j8Rk-JYFM-unsplash.jpg" />
+                        <Image url="@../images/jamakassi-wejxKZ-9IZg-unsplash.jpg" />
                      </image>
                   </ImageView>
                   <Label layoutX="88.0" layoutY="89.0" text="Welcome," textFill="WHITE">
@@ -28,14 +31,6 @@
                         <Font name="Roboto Black" size="48.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="btnSignup" buttonType="RAISED" layoutX="50.0" layoutY="228.0" lineSpacing="40.0" onMouseClicked="#handleButtonAction" prefHeight="34.0" prefWidth="275.0" style="-fx-background-color: #040404;" text="Sign up" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font name="Roboto Bold" size="17.0" />
-                     </font></JFXButton>
-                  <Label layoutX="63.0" layoutY="161.0" text="Don't have an account? Create one here." textFill="WHITE">
-                     <font>
-                        <Font name="Roboto Bold" size="16.0" />
-                     </font></Label>
                </children>
             </Pane>
          </children></AnchorPane>
@@ -44,23 +39,31 @@
             <DropShadow blurType="GAUSSIAN" />
          </effect>
          <children>
-                <Label fx:id="btnForgot" alignment="CENTER" layoutX="125.0" layoutY="335.0" prefHeight="23.0" prefWidth="137.0" text="Forgot Password" textFill="#5383ff">
+            <VBox layoutX="64.0" layoutY="105.0" prefHeight="131.0" prefWidth="255.0">
+               <children>
+                  <TextField fx:id="txtUsername" prefHeight="45.0" prefWidth="255.0" promptText="Email" style="-fx-background-radius: 5;">
+                     <VBox.margin>
+                        <Insets bottom="30.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <PasswordField fx:id="txtPassword" prefHeight="44.0" prefWidth="255.0" promptText="Password" style="-fx-background-radius: 5;" />
+               </children>
+            </VBox>
+                <Label fx:id="btnForgot" alignment="CENTER" layoutX="123.0" layoutY="241.0" prefHeight="23.0" prefWidth="137.0" text="Forgot Password" textFill="#5383ff">
                     <font>
                         <Font name="Segoe UI" size="12.0" />
                     </font>
                 </Label>
-                <Label fx:id="labelErrors" alignment="CENTER" layoutX="56.0" layoutY="301.0" prefHeight="23.0" prefWidth="275.0" textFill="#ff6354">
+                <Label fx:id="labelErrors" alignment="CENTER" layoutX="61.0" layoutY="442.0" prefHeight="23.0" prefWidth="275.0" textFill="#ff6354">
                     <font>
                         <Font name="Segoe UI" size="10.0" />
                     </font>
                 </Label>
-            <JFXTextField fx:id="txtUsername" focusColor="#1ace87" layoutX="59.0" layoutY="166.0" prefHeight="34.0" prefWidth="275.0" promptText="Username" />
-            <JFXPasswordField fx:id="txtPassword" focusColor="#1ace87" layoutX="59.0" layoutY="251.0" prefHeight="34.0" prefWidth="275.0" promptText="Password" />
-            <JFXButton fx:id="btnSignin" buttonType="RAISED" layoutX="56.0" layoutY="388.0" lineSpacing="100.0" onMouseClicked="#handleButtonAction" prefHeight="34.0" prefWidth="275.0" ripplerFill="#15ea81" style="-fx-background-color: #26A9E1;" text="Sign in" textFill="WHITE">
+            <JFXButton fx:id="btnSignin" buttonType="RAISED" layoutX="54.0" layoutY="285.0" lineSpacing="100.0" onMouseClicked="#handleButtonAction" prefHeight="34.0" prefWidth="275.0" ripplerFill="#dbab48" style="-fx-background-color: #c2a944; -fx-background-radius: 20;" text="Sign in" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></JFXButton>
-            <Label layoutX="161.0" layoutY="119.0" text="Login" textFill="#178beb">
+            <Label layoutX="106.0" layoutY="26.0" text="Login" textFill="#dbab48">
                <font>
                   <Font name="Roboto Bold" size="24.0" />
                </font>
@@ -71,16 +74,17 @@
                </image>
             </ImageView>
             <Line endX="-59.0" endY="-7.0" layoutX="151.0" layoutY="29.0" startX="-59.0" startY="30.0" />
-            <Label layoutX="105.0" layoutY="14.0" prefHeight="29.0" prefWidth="64.0" text="Future">
+            <Separator layoutX="54.0" layoutY="345.0" prefHeight="7.0" prefWidth="275.0" />
+            <Label alignment="CENTER" layoutX="183.0" layoutY="334.0" prefHeight="23.0" prefWidth="31.0" style="-fx-background-color: #fff;" text="Or" textFill="#5b5a5a">
                <font>
-                  <Font name="orange juice" size="14.0" />
+                  <Font name="Segoe UI" size="12.0" />
                </font>
             </Label>
-            <Label layoutX="105.0" layoutY="34.0" prefHeight="18.0" prefWidth="40.0" text="Title">
+            <JFXButton fx:id="btnSignup" buttonType="RAISED" layoutX="54.0" layoutY="373.0" lineSpacing="40.0" onMouseClicked="#handleButtonAction" prefHeight="34.0" prefWidth="275.0" style="-fx-background-color: #040404; -fx-background-radius: 20;" text="Sign up" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="orange juice" size="14.0" />
+                  <Font name="Roboto Bold" size="17.0" />
                </font>
-            </Label>
+            </JFXButton>
          </children>
       </Pane>
     </children>

@@ -41,6 +41,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import Main.User;
 import javafx.scene.Parent;
+import javafx.scene.control.PasswordField;
 
 /**
  *
@@ -61,15 +62,18 @@ public class LoginController implements Initializable {
 
     @FXML
     private Label labelErrors;
+    
+    
+    @FXML
+    private TextField txtUsername;
 
     @FXML
-    private JFXTextField txtUsername;
-
-    @FXML
-    private JFXPasswordField txtPassword;
+    private PasswordField txtPassword;
 
     @FXML
     private JFXButton btnSignin;
+    
+    private int index_user;
     
     /// -- 
    
@@ -123,7 +127,7 @@ public class LoginController implements Initializable {
                     stage.setScene(new Scene(root));
                     stage.setResizable(false);
                     stage.show();
-                                                            setLogin.setCurrentUser(currentUser);
+                    setLogin.setCurrentUser(currentUser, index_user);
 
 //                    HomeUIController setCurrent = new HomeUIController();
 //                    setCurrent.setCurrentUser(currentUser);
@@ -167,9 +171,11 @@ public class LoginController implements Initializable {
             }
             bufReader.close();
             
-            for(User user : userList){
-                if(user.getEmail().equals(username) && user.checkPassword(password)){
+            for(User user : userList) {
+                index_user++;
+                if(user.getEmail().equals(username) && user.checkPassword(password)) {
                     currentUser = user;
+                     
 
                     
                     return "Success";
@@ -183,17 +189,6 @@ public class LoginController implements Initializable {
             System.err.println("Wrong Login --///");
             return "Error";
 
-//            else {
-//                labelErrors.setTextFill(Color.GREEN);
-//                labelErrors.setText("Login Successful...");
-//                System.out.println("Successfull Login");
-//                String query = "SELECT userID FROM loginnew WHERE username = ? and password = ?";
-
-//                User temp = new User();
-//                temp.setId(resultSet.getInt("userID"));
-//                 session = temp;
-//                return "Success";
-//            }
 
         } catch (Exception ex) {
             System.err.println(ex.getMessage());

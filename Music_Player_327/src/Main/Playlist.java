@@ -6,6 +6,8 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.List;
+import model.Songs;
 
 /**
  *
@@ -13,29 +15,87 @@ import java.util.ArrayList;
  */
 public class Playlist {
     private String name;
-    private ArrayList<String> songs;
+    private List<playlistSongs> songs;
     
-    public Playlist(String name){
-        this.name = name;
-        songs = new ArrayList<>();
+//    public Playlist(String name){
+//        this.name = name;
+//        songs = new ArrayList<>();
+//    }
+//    
+    public void addSong(playlistSongs song) {
+        songs.add(song);
     }
-    
-    public void addSong(String songId){
-        songs.add(songId);
-    }
-    
-    public ArrayList<String> getAllSongs(){
-        return songs;
-    }
+//    
+//    public ArrayList<String> getAllSongs(){
+//        return songs;
+//    }
     
     public String getAllSongTitles(){
         return songs.toString();
+    }
+    
+    public List<playlistSongs> getSongs(){
+    return this.songs;
+    }
+    
+    
+    public void setName(String n){
+    this.name = n;
     }
     
     
     @Override
     public String toString(){
         return name;
+    }
+    
+    public String getName() {
+    return name;
+    }
+    
+//    public playlistSongs getTitle(){
+//        return songs;
+//    }
+//    
+    
+    
+    public static class playlistSongs {
+        private String title;
+        private String album;
+        private String artist;
+        
+           public playlistSongs(String title, String album, String artist ){
+            this.title = title;
+            this.album = album;
+            this.artist = artist;
+            }
+
+
+
+        
+        
+        public String getTitle(){
+        return title;
+        }
+        
+       public void setTitle(String til){
+       this.title = til;
+       }
+       
+        public void setAlbum(String al){
+        this.album = al;
+        }
+        
+        public void setArtist(String ar){
+        this.artist = ar;
+        }
+        
+        public String getAlbum(){
+        return album;
+        }
+        public String getArtist(){
+            return artist;
+        }
     }
      
 }
