@@ -100,8 +100,6 @@ public class HomeUIController implements Initializable {
         @FXML
     private JFXButton loadMoreButton;
         
-        @FXML
-    private Pane topTrack3;
     
     @FXML
     private HBox Home_Box;
@@ -164,8 +162,6 @@ public class HomeUIController implements Initializable {
     @FXML
     private Text album_info;
       
-    @FXML 
-    private TextField tableFilter;
     
     List<Music> musicList = new ArrayList();
     
@@ -175,12 +171,6 @@ public class HomeUIController implements Initializable {
     @FXML
     private TableView<Music> Browse_Table;
     
-        @FXML
-    private TableView<Playlist> Playlist_Table;
-    
-    
-     @FXML
-    private Label Playlist_Label;
      
       private TextInputDialog textDialog;
 
@@ -195,7 +185,7 @@ public class HomeUIController implements Initializable {
         
     @FXML private TableColumn  Artist = new TableColumn("Artist");
     
-    @FXML private TableColumn  Album = new TableColumn("Album");
+    private TableColumn  Album = new TableColumn("Album");
     
     
         @FXML private TableColumn  Titles = new TableColumn("Titles");
@@ -218,8 +208,6 @@ public class HomeUIController implements Initializable {
         @FXML
     private ScrollPane playlist_pane;
         
-           @FXML
-    private ListView<String> SongsInPlaylist;
            
                @FXML
     private Text playlist_title;
@@ -248,6 +236,13 @@ public class HomeUIController implements Initializable {
     
     @FXML
     private FontAwesomeIconView playpauseIcon;
+    @FXML
+    private Pane topTrack2;
+    @FXML
+    private Pane topTrack4;
+    
+
+    private MenuItem rename;
     
     @FXML
     void handlePlayClick(MouseEvent event) {
@@ -264,10 +259,10 @@ public class HomeUIController implements Initializable {
 
 
 
-    @FXML
-    void handleSearch(KeyEvent event) {
-//
-    }
+//    @FXML
+//    void handleSearch(KeyEvent event) {
+////
+//    }
     
 
    
@@ -280,6 +275,67 @@ public class HomeUIController implements Initializable {
          else if(search.getText() != null){
             Search_Pane.toFront();
         }
+
+    }
+    
+//     private void addMusicLibraryListener(){
+//        musicLibrary.setOnMousePressed(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                
+//                if(event.isPrimaryButtonDown()){
+//                    //play song
+//                    Music selectedMusic = musicLibrary.getSelectionModel().getSelectedItem();
+//                    
+//                }
+//                else if(event.isSecondaryButtonDown()){
+//                    
+//                    ContextMenu ct2 = new ContextMenu();
+//                    MenuItem mi;
+//                    
+//                    for(int i = 0; i < playlist_view.getItems().size(); i++){
+//                        Playlist playlist = playlist_view.getItems().get(i);
+//                        mi = new MenuItem("Add to " + playlist);
+//                        mi.setOnAction(new EventHandler<ActionEvent>() {
+//                            
+//                            @Override
+//                            public void handle(ActionEvent t) {
+//                                Music toAdd = musicLibrary.getSelectionModel().getSelectedItem();
+//                                String songTitle = toAdd.getSong().getTitle();
+////                                currentUser.getPlaylist(playlist).addSong(songTitle);
+////                                currentUser.getPlaylist()
+//                            }
+//                        });
+//                        ct2.getItems().add(mi);
+//                    }       
+//                    ct2.show(musicLibrary,event.getScreenX(),event.getScreenY());
+//                }
+//            }
+//        });
+//    }
+//    
+        @FXML
+    void handleClickSearch(MouseEvent event) {
+//      int index = musicLibrary.getItems().indexOf(musicLibrary.getSelectionModel().getSelectedItem());
+//              
+//      playlistSongs me;
+//      me = new playlistSongs(dataList.get(index).getSong().title,  dataList.get(index).getArtist().getName(), dataList.get(index).getArtist().getName());
+//////
+//      currentUser.getPlaylist().get(0).addSong(me);
+//      
+//      System.out.println(currentUser.getPlaylist().get(0).getSongs());
+////
+////      
+//////       
+//////       Browse_Table.setOnMousePressed(new EventHandler<MouseEvent>() {
+//////   @Override
+//////   public void handle(MouseEvent event) {
+//////       if (event.isSecondaryButtonDown()) {
+//////           contextMenu.show(Browse_Table, event.getScreenX(), event.getScreenY());
+//////           
+//////       }
+//////   }
+//////});
 
     }
 
@@ -296,11 +352,22 @@ public class HomeUIController implements Initializable {
         artist_info.setText("");
         album_info.setText("");
         addPlaylistListener();
+        addMusicLibraryListener();
+                ct = new ContextMenu();
+        remove = new MenuItem("Remove");
+        rename = new MenuItem("Rename");
+                setDialogBox();
         
            }catch (Exception ex){
          }
     }    
     
+    
+        private void setDialogBox(){
+        textDialog = new TextInputDialog();
+        textDialog.setHeaderText("Enter playlist name:");
+        return;
+    }
     
 
     
@@ -345,6 +412,9 @@ public class HomeUIController implements Initializable {
 //        }
     }
     
+    
+   
+    
     //Takes the Music json and deserializes to Classes
     void addMusicToList() {        
         try{
@@ -370,14 +440,31 @@ public class HomeUIController implements Initializable {
     
     @FXML
     void handlePlaylistClicks(MouseEvent event) {
-        
          playlist_view.getSelectionModel().getSelectedItem().getName();
          playlist_title.setText(currentUser.getPlaylist().get(playlist_view.getSelectionModel().getSelectedIndex()).getName());
-         callPlaylistTable(playlist_view.getSelectionModel().getSelectedIndex());
-//           playlist_pane.toFront();
+         callPlaylistTable(        playlist_view.getSelectionModel().getSelectedIndex());
+         playlist_pane.toFront();
+                  
+//                  if(event.isSecondaryButtonDown()){
+//                         remove.setOnAction(new EventHandler<ActionEvent>() {
+//                        public void handle(ActionEvent t) {
+//                            Playlist toRemove = playlist_view.getSelectionModel().getSelectedItem();
+//                            playlist_view.getItems().remove(playlist_view.getSelectionModel().getSelectedItem());
+//                            playlist_pane.toFront();
+//                        }
+//                         });
+//                  }
+
+           
+     
+         
+
+         
+                    
+           
 //        
 //      System.out.println(playlist_view.getSelectionModel().getSelectedItem().getName());
-      
+                 
     }
     
     @FXML
@@ -421,7 +508,7 @@ public class HomeUIController implements Initializable {
     }
         
          private void showSongsInPlaylist(int playlistName){
-        Playlist playlist = currentUser.getPlaylist().get(playlistName);
+//        Playlist playlist = currentUser.getPlaylist().get(playlistName);
 //        SongsInPlaylist.getItems().clear();
 //        for(String song : playlist.getAllSongs()){
 //            SongsInPlaylist.getItems().add(song);
@@ -487,12 +574,12 @@ public class HomeUIController implements Initializable {
         
             textDialog.getEditor().clear();
             Optional<String> result = textDialog.showAndWait();
-//            if(result.isPresent()){
-//                Playlist newPlaylist = new Playlist();
-//                newPlaylist.setName(textDialog.getEditor().getText());
-//                playlist_view.getItems().add(newPlaylist);
-//                currentUser.addPlaylist(newPlaylist);
-//            }
+            if(result.isPresent()){
+                Playlist newPlaylist = new Playlist();
+                newPlaylist.setName(textDialog.getEditor().getText());
+                playlist_view.getItems().add(newPlaylist);
+                currentUser.addPlaylist(newPlaylist);
+          }
         
         }
      
@@ -500,7 +587,6 @@ public class HomeUIController implements Initializable {
 
         
         
-    @FXML
     void handleContextTop(ContextMenuEvent event) {
 
 
@@ -554,6 +640,21 @@ public class HomeUIController implements Initializable {
 //         }
 //     }
 // };
+         
+         
+         
+             @FXML
+    void handlePlaylistTable(MouseEvent event) {
+//              playlistSongs me;
+//      me = new playlistSongs(playList_Table.get(index).getSong().title, browseList.get(index).getArtist().getName(), browseList.get(index).getArtist().getName());
+//     // browseList.get(index).getSong().title, browseList.get(index).getArtist(), browseList.get(index).getArtist());
+//      
+//        //currentUser.getPlaylist().get(0).getSongs().get(0).setAlbum();
+//      // browseList.get(index).getArtist().getName();
+      
+//      currentUser.getPlaylist().get(0).addSong(me);
+//      currentUser.getPlaylist().get(0).getSongs();
+    }
 // 
  
  void callSearch() {
@@ -614,30 +715,113 @@ public class HomeUIController implements Initializable {
 		musicLibrary.setItems(sortedData);
 }
  
-     @FXML
-    void handleTableClick(MouseEvent event) {
-//      int index = Browse_Table.getItems().indexOf(Browse_Table.getSelectionModel().getSelectedItem());
-//      playlistSongs me;
-//      me = new playlistSongs(browseList.get(index).getSong().title, browseList.get(index).getArtist().getName(), browseList.get(index).getArtist().getName());
-//     // browseList.get(index).getSong().title, browseList.get(index).getArtist(), browseList.get(index).getArtist());
-//      
-//        //currentUser.getPlaylist().get(0).getSongs().get(0).setAlbum();
-//      // browseList.get(index).getArtist().getName();
-//      
-//      currentUser.getPlaylist().get(0).addSong(me);
-//      currentUser.getPlaylist().get(0).getSongs();
-//      
-//       
-//       Browse_Table.setOnMousePressed(new EventHandler<MouseEvent>() {
-//   @Override
-//   public void handle(MouseEvent event) {
-//       if (event.isSecondaryButtonDown()) {
-//           contextMenu.show(Browse_Table, event.getScreenX(), event.getScreenY());
-//           
-//       }
-//   }
-//});
+ 
+
+    
+    
+//     @FXML
+//    void handleSearch(MouseEvent event) {
+////        
+//////      int index = musicLibrary.getItems().indexOf(musicLibrary.getSelectionModel().getSelectedItem());
+//////      System.out.println(index);
+//////      playlistSongs me;
+////      //me = new playlistSongs
+////       // System.out.println(dataList.get(index).getSong().title +  dataList.get(index).getArtist().getName() + dataList.get(index).getArtist().getName());
+////     // browseList.get(index).getSong().title, browseList.get(index).getArtist(), browseList.get(index).getArtist());
+////      
+////        //currentUser.getPlaylist().get(0).getSongs().get(0).setAlbum();
+////      // browseList.get(index).getArtist().getName();
+////      
+////
+////      //currentUser.getPlaylist().get(0).addSong(me);
+//////            System.out.println(currentUser.getPlaylist().get(0).getSongs());
+////
+////      
+//////       
+//////       Browse_Table.setOnMousePressed(new EventHandler<MouseEvent>() {
+//////   @Override
+//////   public void handle(MouseEvent event) {
+//////       if (event.isSecondaryButtonDown()) {
+//////           contextMenu.show(Browse_Table, event.getScreenX(), event.getScreenY());
+//////           
+//////       }
+//////   }
+//////});
+////        
+//    }
+ 
+ 
+  private void addMusicLibraryListener(){
+        musicLibrary.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                
+                if(event.isPrimaryButtonDown()){
+                    //play song
+                    Music selectedMusic = musicLibrary.getSelectionModel().getSelectedItem();
+                    
+                }
+                else if(event.isSecondaryButtonDown()){
+                    
+                    ContextMenu ct2 = new ContextMenu();
+                    MenuItem mi;
+                    
+                    for(int i = 0; i < playlist_view.getItems().size(); i++){
+                        Playlist playlist = playlist_view.getItems().get(i);
+                        mi = new MenuItem("Add to " + playlist);
+                        mi.setOnAction(new EventHandler<ActionEvent>() {
+                            
+                            @Override
+                            public void handle(ActionEvent t) {
+                            //    Music toAdd = musicLibrary.getSelectionModel().getSelectedItem();
+                           //     String songTitle = toAdd.getSong().getTitle();
+                                 int index = musicLibrary.getItems().indexOf(musicLibrary.getSelectionModel().getSelectedItem());
+      playlistSongs me;
+      me = new playlistSongs(dataList.get(index).getSong().title, dataList.get(index).getArtist().getName(), dataList.get(index).getArtist().getName());
+      
+////        //currentUser.getPlaylist().get(0).getSongs().get(0).setAlbum();
+////      // browseList.get(index).getArtist().getName();
+////      
+      currentUser.getPlaylist().get(0).addSong(me);
+      Gson gson = new Gson();
+ 
+System.out.println(gson.toJson(me));
+////      currentUser.getPlaylist().get(0).getSongs();
+                            }
+                        });
+                        ct2.getItems().add(mi);
+                    }       
+                    ct2.show(musicLibrary,event.getScreenX(),event.getScreenY());
+                }
+            }
+        });
     }
+ 
+    @FXML
+    void handleTableClick(MouseEvent event) {
+////      int index = Browse_Table.getItems().indexOf(Browse_Table.getSelectionModel().getSelectedItem());
+////      playlistSongs me;
+////      me = new playlistSongs(browseList.get(index).getSong().title, browseList.get(index).getArtist().getName(), browseList.get(index).getArtist().getName());
+////     // browseList.get(index).getSong().title, browseList.get(index).getArtist(), browseList.get(index).getArtist());
+////      
+////        //currentUser.getPlaylist().get(0).getSongs().get(0).setAlbum();
+////      // browseList.get(index).getArtist().getName();
+////      
+////      currentUser.getPlaylist().get(0).addSong(me);
+////      currentUser.getPlaylist().get(0).getSongs();
+////      
+////       
+////       Browse_Table.setOnMousePressed(new EventHandler<MouseEvent>() {
+////   @Override
+////   public void handle(MouseEvent event) {
+////       if (event.isSecondaryButtonDown()) {
+////           contextMenu.show(Browse_Table, event.getScreenX(), event.getScreenY());
+////           
+////       }
+////   }
+////});
+    }
+    
     
     
  
@@ -735,4 +919,9 @@ public class HomeUIController implements Initializable {
        playlistSong_View.setItems(playList);
  
  }
+  
+  void WriteSong() {
+  
+  }
+
 }

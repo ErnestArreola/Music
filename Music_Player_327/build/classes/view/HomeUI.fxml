@@ -158,7 +158,7 @@
                                                 <Insets left="10.0" right="10.0" />
                                              </HBox.margin>
                                           </FontAwesomeIconView>
-                                          <TextField fx:id="search" onKeyReleased="#handleSearches" onKeyTyped="#handleSearch" prefHeight="32.0" prefWidth="122.0" promptText="Search">
+                                          <TextField fx:id="search" onKeyReleased="#handleSearches" prefHeight="32.0" prefWidth="122.0" promptText="Search">
                                              <HBox.margin>
                                                 <Insets right="40.0" />
                                              </HBox.margin>
@@ -241,35 +241,6 @@
                                  </children>
                               </AnchorPane>
                           </content>
-                        </ScrollPane>
-                        <ScrollPane fx:id="Search_Pane" pannable="true" prefHeight="200.0" prefWidth="200.0">
-                           <content>
-                              <AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <VBox prefHeight="452.0" prefWidth="821.0">
-                                       <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
-                                             <font>
-                                                <Font name="Roboto Bold" size="25.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="50.0" left="10.0" top="30.0" />
-                                             </VBox.margin>
-                                          </Text>
-                                          <TableView fx:id="musicLibrary" prefHeight="452.0" prefWidth="821.0" stylesheets="@../css/TableView.css" tableMenuButtonVisible="true">
-                                             <columns>
-                                                <TableColumn fx:id="title" prefWidth="134.0" text="     Title" />
-                                                <TableColumn fx:id="artist" prefWidth="157.0" text="     C2" />
-                                             </columns>
-                                             <columnResizePolicy>
-                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                             </columnResizePolicy>
-                                          </TableView>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                           </content>
                         </ScrollPane>
                         <ScrollPane fx:id="Browser" pannable="true" prefHeight="553.0" prefWidth="830.0" style="-fx-background-color: #D0DEE3;" stylesheets="@../css/ScrollPane.css">
                           <content>
@@ -507,7 +478,7 @@
                                        </children></HBox>
                                     <HBox prefHeight="357.0" prefWidth="823.0">
                                        <children>
-                                          <TableView fx:id="playlistSong_View" prefHeight="180.0" prefWidth="823.0">
+                                          <TableView fx:id="playlistSong_View" onMouseClicked="#handlePlaylistTable" prefHeight="180.0" prefWidth="823.0">
                                             <columns>
                                               <TableColumn fx:id="Titles" prefWidth="208.9287567138672" text="Title" />
                                               <TableColumn fx:id="Artists" prefWidth="296.6728515625" text="Artist" />
@@ -518,6 +489,35 @@
                                     </HBox>
                                  </children>
                               </VBox>
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane fx:id="Search_Pane" pannable="true" prefHeight="200.0" prefWidth="200.0">
+                           <content>
+                              <AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="452.0" prefWidth="821.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
+                                             <font>
+                                                <Font name="Roboto Bold" size="25.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="50.0" left="10.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                          <TableView fx:id="musicLibrary" onMouseClicked="#handleClickSearch" prefHeight="452.0" prefWidth="821.0" stylesheets="@../css/TableView.css" tableMenuButtonVisible="true">
+                                             <columns>
+                                                <TableColumn fx:id="title" prefWidth="134.0" text="     Title" />
+                                                <TableColumn fx:id="artist" prefWidth="157.0" text="     C2" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
                            </content>
                         </ScrollPane>
                      </children></StackPane>
