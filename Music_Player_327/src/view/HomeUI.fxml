@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeUIController">
+   <children>
+      <HBox prefHeight="567.0" prefWidth="1200.0">
+         <children>
+            <VBox prefHeight="541.0" prefWidth="191.0" style="-fx-background-color: #FAFAFB;" styleClass="sidebar" stylesheets="@../css/styles.css">
+               <children>
+                  <HBox fx:id="Home_Box" alignment="CENTER_LEFT" onMouseClicked="#handleClicks" prefHeight="50.0" prefWidth="182.0">
+                     <VBox.margin>
+                        <Insets top="80.0" />
+                     </VBox.margin>
+                     <children>
+                        <FontAwesomeIconView fill="#aeaeae" glyphName="HOME" size="25">
+                           <HBox.margin>
+                              <Insets left="25.0" right="10.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="font-2" text="Home">
+                           <font>
+                              <Font name="Roboto Regular" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin></Text>
+                     </children>
+                     <stylesheets>
+                        <URL value="@../css/constraints.css" />
+                        <URL value="@../css/styles.css" />
+                     </stylesheets>
+                     <styleClass>
+                        <String fx:value="padding-10" />
+                        <String fx:value="menu_item" />
+                     </styleClass>
+                  </HBox>
+                  <HBox fx:id="Box_Browse" alignment="CENTER_LEFT" onMouseClicked="#handleClicks" prefHeight="50.0" prefWidth="182.0">
+                     <children>
+                        <FontAwesomeIconView fill="#c6c6c6" glyphName="HOME" size="25">
+                           <HBox.margin>
+                              <Insets left="25.0" right="10.0" />
+                           </HBox.margin>
+                        </FontAwesomeIconView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="font-2" text="Browse">
+                           <font>
+                              <Font name="Roboto Regular" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                     <stylesheets>
+                        <URL value="@../css/constraints.css" />
+                        <URL value="@../css/styles.css" />
+                     </stylesheets>
+                     <styleClass>
+                        <String fx:value="padding-10" />
+                        <String fx:value="menu_item" />
+                     </styleClass>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <VBox alignment="CENTER" prefHeight="350.0" prefWidth="191.0">
+                     <children>
+                        <Label text="Playlist">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Roboto Regular" size="13.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane fx:id="Scrollpane" hbarPolicy="NEVER" prefHeight="260.0" prefWidth="191.0">
+                           <content>
+                              <ListView fx:id="playlist_view" onMouseClicked="#handlePlaylistClicks" prefHeight="239.0" prefWidth="189.0" style="-fx-background-color: #FAFAFB;" />
+                           </content>
+                        </ScrollPane>
+                     </children></VBox>
+                  <Pane prefHeight="113.0" prefWidth="191.0">
+                     <children>
+                        <HBox fx:id="Box_Playlist" alignment="CENTER_LEFT" layoutX="10.0" layoutY="16.0" onMouseClicked="#handleClicks" prefHeight="40.0" prefWidth="157.0" style="-fx-background-color: #63a9d4; -fx-background-radius: 50;" styleClass="button">
+                           <children>
+                              <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="15">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                              <Line endX="-100.00013732910156" endY="-28.672744750976562" opacity="0.45" startX="-100.0" stroke="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Line>
+                              <Label text="New Playlist" textFill="WHITE">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="Roboto Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <effect>
+                              <DropShadow color="#c3bcbc" />
+                           </effect>
+                        </HBox>
+                     </children>
+                  </Pane>
+               </children>
+               <effect>
+                  <DropShadow color="WHITE" />
+               </effect></VBox>
+            <VBox prefHeight="541.0" prefWidth="830.0">
+               <children>
+                  <HBox prefHeight="87.0" prefWidth="858.0" style="-fx-background-color: #FAFAFB;">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="33.0" prefWidth="418.0">
+                           <stylesheets>
+                              <URL value="@../css/styles.css" />
+                              <URL value="@../css/constraints.css" />
+                           </stylesheets>
+                           <children>
+                              <Pane prefHeight="81.0" prefWidth="305.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" layoutY="21.0" prefHeight="27.0" prefWidth="175.0" style="-fx-background-color: #c7c7c791;" styleClass="round">
+                                       <children>
+                                          <FontAwesomeIconView glyphName="SEARCH" styleClass="fill-dark_grey">
+                                             <HBox.margin>
+                                                <Insets left="10.0" right="10.0" />
+                                             </HBox.margin>
+                                          </FontAwesomeIconView>
+                                          <TextField fx:id="search" onKeyReleased="#handleSearches" prefHeight="32.0" prefWidth="122.0" promptText="Search">
+                                             <HBox.margin>
+                                                <Insets right="40.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                             <styleClass>
+                                                <String fx:value="white" />
+                                                <String fx:value="transparent" />
+                                                <String fx:value="fill-white" />
+                                             </styleClass>
+                                          </TextField>
+                                       </children>
+                                       <stylesheets>
+                                          <URL value="@../css/styles.css" />
+                                          <URL value="@../css/colors.css" />
+                                          <URL value="@../css/constraints.css" />
+                                       </stylesheets>
+                                    </HBox>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="81.0" prefWidth="414.0" styleClass="ro" stylesheets="@../css/constraints.css">
+                           <children>
+                              <ImageView fitHeight="42.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" styleClass="border-round">
+                                 <HBox.margin>
+                                    <Insets left="200.0" right="10.0" />
+                                 </HBox.margin>
+                                 <image>
+                                    <Image url="@../images/avatar-default-circle.png" />
+                                 </image>
+                              </ImageView>
+                              <Text fx:id="Account_Name" strokeType="OUTSIDE" strokeWidth="0.0" text="User">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <MenuButton fx:id="SettingsDropDown" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="6.0" mnemonicParsing="false" onMouseClicked="#handelMenu" prefHeight="40.0" prefWidth="25.0" style="-fx-background-color: #FCFDFD;">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Account" />
+                                    <MenuItem fx:id="Menu_Settings" mnemonicParsing="false" onAction="#handleSubMenu" text="Settings" />
+                                 </items>
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                              </MenuButton>
+                           </children>
+                        </HBox>
+                     </children>
+                     <effect>
+                        <DropShadow height="0.5" radius="0.0" width="0.5" />
+                     </effect></HBox>
+                  <StackPane prefHeight="467.0" prefWidth="858.0">
+                     <children>
+                        <ScrollPane fx:id="Settings_Pane" prefHeight="200.0" prefWidth="200.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox layoutX="-3.0" layoutY="-1.0" prefHeight="459.0" prefWidth="834.0">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
+                                                   <HBox.margin>
+                                                      <Insets left="35.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font name="Roboto Regular" size="30.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </HBox>
+                                          <HBox prefHeight="100.0" prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <Pane fx:id="Home_Panel" onMouseClicked="#handleClicks" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #D9DFE4;">
+                           <children>
+                              <Label text="Home" textFill="WHITE">
+                                 <font>
+                                    <Font size="67.0" />
+                                 </font></Label>
+                              <Pane layoutX="143.0" layoutY="98.0" prefHeight="340.0" prefWidth="650.0" style="-fx-background-color: #ffffff;">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <children>
+                                    <ImageView fitHeight="346.0" fitWidth="508.0" layoutX="-122.0" pickOnBounds="true">
+                                       <image>
+                                          <Image url="@../images/adam-whitlock-I9j8Rk-JYFM-unsplash.jpg" />
+                                       </image>
+                                       <effect>
+                                          <DropShadow color="WHITE" />
+                                       </effect>
+                                    </ImageView>
+                                    <Pane layoutX="399.0" layoutY="27.0" prefHeight="103.0" prefWidth="242.0" style="-fx-background-color: #ffffff;">
+                                       <children>
+                                          <Text layoutX="45.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tip: Click on browse to view and play music." wrappingWidth="175.00000197440386" />
+                                          <FontAwesomeIconView glyphName="BELL" layoutX="14.0" layoutY="55.0" />
+                                       </children>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                    </Pane>
+                                    <Pane layoutX="399.0" layoutY="210.0" prefHeight="103.0" prefWidth="242.0" style="-fx-background-color: #ffffff;">
+                                       <children>
+                                          <Text layoutX="37.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tip: Type in the search field to find your music." wrappingWidth="174.9999958100816" />
+                                          <FontAwesomeIconView glyphName="BELL" layoutX="8.0" layoutY="52.0" />
+                                       </children>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect></Pane>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                        <ScrollPane fx:id="playlist_pane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #D0DEE3;">
+                           <content>
+                              <VBox prefHeight="459.0" prefWidth="823.0">
+                                 <children>
+                                    <HBox alignment="BOTTOM_LEFT" prefHeight="32.0" prefWidth="823.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Playlist">
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" top="30.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                       </children></HBox>
+                                    <HBox prefHeight="27.0" prefWidth="834.0">
+                                       <children>
+                                          <Text fx:id="playlist_title" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                             <font>
+                                                <Font name="Roboto Regular" size="24.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                       </children></HBox>
+                                    <HBox prefHeight="16.0" prefWidth="834.0">
+                                       <children>
+                                          <Line endX="720.0" opacity="0.29" startX="-80.0" />
+                                       </children></HBox>
+                                    <HBox prefHeight="357.0" prefWidth="823.0">
+                                       <children>
+                                          <TableView fx:id="playlistSong_View" onMouseClicked="#handlePlaylistTable" prefHeight="180.0" prefWidth="823.0">
+                                            <columns>
+                                              <TableColumn fx:id="Titles" prefWidth="208.9287567138672" text="Title" />
+                                              <TableColumn fx:id="Artists" prefWidth="296.6728515625" text="Artist" />
+                                                <TableColumn fx:id="Albums" prefWidth="385.3271484375" text="Album" />
+                                            </columns>
+                                          </TableView>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane fx:id="Search_Pane" pannable="true" prefHeight="200.0" prefWidth="200.0">
+                           <content>
+                              <AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox prefHeight="452.0" prefWidth="821.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
+                                             <font>
+                                                <Font name="Roboto Bold" size="25.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="50.0" left="10.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                          <TableView fx:id="musicLibrary" onMouseClicked="#handleClickSearch" prefHeight="452.0" prefWidth="821.0" stylesheets="@../css/TableView.css" tableMenuButtonVisible="true">
+                                             <columns>
+                                                <TableColumn fx:id="title" prefWidth="134.0" text="     Title" />
+                                                <TableColumn fx:id="artist" prefWidth="157.0" text="     C2" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane fx:id="Browser" pannable="true" prefHeight="553.0" prefWidth="830.0" style="-fx-background-color: #D0DEE3;" stylesheets="@../css/ScrollPane.css">
+                          <content>
+                              <VBox>
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Browse">
+                                             <font>
+                                                <Font name="Roboto Bold" size="35.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Top Tracks">
+                                             <font>
+                                                <Font name="Roboto Bold" size="16.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="49.0" prefWidth="780.0">
+                                       <children>
+                                          <Line endX="633.0" endY="1.52587890625E-5" opacity="0.29" startX="-145.3589324951172" strokeWidth="0.25" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="219.0" prefWidth="780.0">
+                                       <children>
+                                          <Pane fx:id="topTrack1" onMouseClicked="#handleTop" prefHeight="200.0" prefWidth="190.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;" stylesheets="@../css/styles.css">
+                                             <children>
+                                                <ImageView fitHeight="126.0" fitWidth="148.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true">
+                                                   <effect>
+                                                      <DropShadow />
+                                                   </effect>
+                                                   <image>
+                                                      <Image url="@../images/imperialMarch.jpg" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label layoutX="42.0" layoutY="165.0" text="Imperial March">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets right="30.0" />
+                                             </HBox.margin>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Pane>
+                                          <Pane fx:id="topTrack2" prefHeight="200.0" prefWidth="190.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
+                                             <HBox.margin>
+                                                <Insets right="30.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <ImageView fitHeight="126.0" fitWidth="149.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true">
+                                                   <effect>
+                                                      <DropShadow />
+                                                   </effect>
+                                                   <image>
+                                                      <Image url="@../images/imperialMarch.jpg" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label layoutX="43.0" layoutY="162.0" text="Imperial March">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Pane>
+                                          <Pane fx:id="topTrack3" prefHeight="200.0" prefWidth="190.0" style="-fx-background-color: #ffffff;">
+                                             <children>
+                                                <ImageView fitHeight="127.0" fitWidth="149.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true">
+                                                   <effect>
+                                                      <DropShadow height="20.82" radius="9.91" width="20.82" />
+                                                   </effect>
+                                                   <image>
+                                                      <Image url="@../images/imperialMarch.jpg" />
+                                                   </image>
+                                                </ImageView>
+                                                <Label layoutX="41.0" layoutY="161.0" text="Imperial March">
+                                                   <font>
+                                                      <Font name="Roboto Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets right="30.0" />
+                                             </HBox.margin>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Pane>
+                                          <Pane fx:id="topTrack4" prefHeight="200.0" prefWidth="190.0" style="-fx-background-color: #ffffff;" stylesheets="@../css/styles.css">
+                                             <children>
+                                                <ImageView fitHeight="129.0" fitWidth="149.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true">
+                                                   <effect>
+                                                      <DropShadow height="20.82" radius="9.91" width="20.82" />
+                                                   </effect>
+                                                   <image>
+                                                      <Image url="@../images/imperialMarch.jpg" />
+                                                   </image>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
+                                                </ImageView>
+                                                <Label layoutX="34.0" layoutY="162.0" text="Imperial March">
+                                                   <font>
+                                                      <Font name="System Bold" size="13.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Pane>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="107.0" prefWidth="814.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hottest">
+                                             <font>
+                                                <Font name="Roboto Regular" size="16.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="479.0" prefWidth="814.0">
+                                       <children>
+                                          <VBox>
+                                             <children>
+                                                <TableView fx:id="Browse_Table" onMouseClicked="#handleTableClick" prefHeight="478.0" prefWidth="814.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="Artist" prefWidth="75.0" text="Artist" />
+                                                    <TableColumn fx:id="Title" prefWidth="75.0" text="Title" />
+                                                  </columns>
+                                                   <columnResizePolicy>
+                                                      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                   </columnResizePolicy>
+                                                </TableView>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <JFXButton fx:id="loadMoreButton" buttonType="RAISED" onMouseClicked="#loadMoreClicked" prefHeight="49.0" prefWidth="230.0" ripplerFill="#1079c9" style="-fx-background-color: #ffffff;" text="Load More" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                          </content>
+                        </ScrollPane>
+                     </children></StackPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox prefHeight="106.0" prefWidth="600.0" style="-fx-background-color: #FCFDFD;">
+         <children>
+            <Pane prefHeight="80.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="album_art" fitHeight="74.0" fitWidth="102.0" layoutX="22.0" layoutY="3.0" pickOnBounds="true">
+                     <image>
+                        <Image url="@../images/unknown.png" />
+                     </image>
+                     <effect>
+                        <DropShadow color="#ddd6d6" />
+                     </effect>
+                  </ImageView>
+               </children>
+               <effect>
+                  <Glow level="0.63" />
+               </effect>
+            </Pane>
+            <Pane prefHeight="80.0" prefWidth="838.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="606.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="56.0" prefWidth="606.0" stylesheets="@../css/styles.css">
+                           <children>
+                              <FontAwesomeIconView glyphName="">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                              <FontAwesomeIconView glyphName="ANGLE_DOUBLE_LEFT" size="25">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                              <FontAwesomeIconView fx:id="playpauseIcon" fill="#63a9d4" glyphName="PLAY" onMouseClicked="#handlePlayClick" size="30" styleClass="glyph-icon">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                              <FontAwesomeIconView glyphName="ANGLE_DOUBLE_RIGHT" size="25">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                              <FontAwesomeIconView glyphName="REPEAT">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </FontAwesomeIconView>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="24.0" prefWidth="606.0">
+                           <children>
+                              <Slider prefHeight="16.0" prefWidth="378.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <FontAwesomeIconView glyphName="VOLUME_UP" layoutX="619.0" layoutY="48.0" size="20" />
+                  <JFXSlider layoutX="647.0" layoutY="33.0" />
+                  <Text fx:id="artist_info" layoutX="7.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text fx:id="album_info" layoutX="6.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+               </children>
+            </Pane>
+         </children>
+         <effect>
+            <DropShadow height="2.79" radius="1.6524999999999999" width="5.82" />
+         </effect>
+      </HBox>
+   </children>
+</VBox>
