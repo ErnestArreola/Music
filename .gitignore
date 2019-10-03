@@ -3,3 +3,9 @@
 .DS_Store
 
 build/
+
+Music_Player_327/build/
+
+*.class
+*.xml
+*.jar
