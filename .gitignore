@@ -101,3 +101,9 @@ Music_Player_327/dist/run458029991/web-files/javafx-loading-100x100.gif
 Music_Player_327/dist/run458029991/web-files/javafx-loading-25x25.gif
 Music_Player_327/dist/run458029991/web-files/upgrade_java.png
 Music_Player_327/dist/run458029991/web-files/upgrade_javafx.png
+
+Music_Player_327/build/
+
+*.class
+*.xml
+*.jar
