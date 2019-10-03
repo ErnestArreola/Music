@@ -1,0 +1,74 @@
+
+.sidebar{
+    -fx-background-color: #FFF8E6
+}
+
+.slider > .track {
+	-fx-background-color:#2196F3;
+	-fx-background-insets:1;
+}
+
+.slider > .thumb {
+	-fx-background-color:#2196F3;
+	-fx-background-insets:1;
+}
+
+.menu_item:active {
+	-fx-background-color:#ffffff;
+	-fx-border-width:0 0 0 4px;
+	-fx-border-color: #6583fe;
+}
+
+.menu_item:hover {
+	-fx-background-color:#ffffff;
+	-fx-border-width:0 0 0 4px;
+	-fx-border-color: #63A9D4;
+	-fx-cursor:hand;
+	-fx-fill:white;
+}
+
+.menu_item:hover FontAwesomeIcon, .menu_item:hover Text {
+	-fx-fill: #6583fe;
+}
+
+.album_art:hover {
+    	-fx-background-color:#ffffff;
+	-fx-border-width:0 0 0 4px;
+	-fx-border-color: #4160A3;
+	-fx-cursor:hand;
+}
+
+
+
+/*.glyph-icon:hover{
+     -fx-background-color: #383838;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+    -fx-fill: #000000
+}*/
+/*
+.play-icon:hover {
+    -glyph-name: "PLAY";
+    -fx-background-color: #383838;
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+    -fx-fill: #000000
+    
+}*/
+
+.glyph-icon:hover{
+    -fx-scale-y: 1.2;
+    -fx-scale-x: 1.2;
+    -fx-effect:  dropshadow(three-pass-box, rgba(0,0,0,0.2), 4, 0, 0, 0);
+}
+
+.button:hover FontAwesomeIcon {
+    -fx-background-color: #383838;
+    -fx-scale-y: 1.1;
+}
+
+.glyph-icon:pressed {
+    -fx-scale-y: 0.9;
+    -fx-scale-x: 0.9;
+}
+
