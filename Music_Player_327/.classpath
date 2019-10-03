@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="rpc/|Main/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src/Main"/>
+	<classpathentry kind="src" path="src/rpc"/>
+	<classpathentry kind="lib" path="dist/lib/controlsfx-8.40.15.jar"/>
+	<classpathentry kind="lib" path="dist/lib/fontawesomefx-commons-8.15.jar"/>
+	<classpathentry kind="lib" path="dist/lib/fontawesomefx-fontawesome-4.7.0-5.jar"/>
+	<classpathentry kind="lib" path="dist/lib/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="dist/lib/jfoenix-8.0.8.jar"/>
+	<classpathentry kind="lib" path="dist/lib/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="dist/Music_Player_327.jar"/>
+	<classpathentry kind="lib" path="gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="jl1.0.1.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
