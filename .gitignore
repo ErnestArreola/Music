@@ -141,3 +141,5 @@ Music_Player_327/nbproject/private/private.properties
 Music_Player_327/nbproject/private/private.xml
 Music_Player_327/nbproject/project.properties
 Music_Player_327/src/.DS_Store
+/dist/
+/nbproject/private/
