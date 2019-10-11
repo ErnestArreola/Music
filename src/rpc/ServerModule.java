@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -43,9 +44,9 @@ public class ServerModule extends Application{
             request = new DatagramPacket(buf, buf.length);
             socket.receive(request);
             System.out.println("Received a Request from " + request.getAddress());
-            System.out.println("Request: " + request.getData());
+//            System.out.println("Request: " + (new String(request.getData())).trim());
             
-            
+          
             new Thread (new Runnable(){
                 @Override
                 public void run() {
@@ -55,8 +56,9 @@ public class ServerModule extends Application{
                         
                         reply = new DatagramPacket(ret.getBytes(), ret.length(),
                                 request.getAddress(), request.getPort());
-                        
+                                                                       
                         socket.send(reply);
+                        System.out.println("Reply is sent.");
                         
                     } catch (IOException ex) {
                         Logger.getLogger(ServerModule.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,14 +73,21 @@ public class ServerModule extends Application{
     
     
     private void registerDispatchers(){
-        
+        SongDispatcher songDispatcher = new SongDispatcher();
+        dispatcher.registerObject(songDispatcher, "SongServices");
+        LoginDispatcher userDispatcher = new LoginDispatcher();
+        dispatcher.registerObject(userDispatcher, "LoginServices");
+        RegisterDispatcher registerDispatcher = new RegisterDispatcher();
+        dispatcher.registerObject(registerDispatcher, "RegisterServices");
+        PlaylistDispatcher playlistDispatcher = new PlaylistDispatcher();
+        dispatcher.registerObject(playlistDispatcher, "PlaylistServices");
     }
     
     
     
     public static void main(String[] args) throws SocketException, IOException {
         
-        System.out.println("Main: Server is listening on PORT: ");
+        System.out.println("Server is listening on PORT: " + PORT);
         new ServerModule().run();
         
     }
