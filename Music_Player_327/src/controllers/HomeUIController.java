@@ -25,7 +25,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.jfoenix.controls.JFXButton;
-import com.sun.deploy.util.SessionState.Client;
+//import com.sun.deploy.util.SessionState.Client;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.awt.image.BufferedImage;
@@ -317,11 +317,10 @@ public class HomeUIController implements Initializable {
     
 
     
-    public void setCurrentUser(User current, int index) {
+    public void setCurrentUser(User current) {
         if(current != null) {
           this.currentUser =  current;
                    Account_Name.setText(currentUser.getFirstName());
-                  user_index = index; 
         }
         callBuildPlaylist();
     }

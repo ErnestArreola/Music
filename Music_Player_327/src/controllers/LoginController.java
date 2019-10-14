@@ -40,8 +40,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import Main.User;
+import com.google.gson.JsonObject;
+import java.net.SocketException;
 import javafx.scene.Parent;
 import javafx.scene.control.PasswordField;
+import rpc.CommunicationModule;
+import rpc.Proxy;
+import rpc.ProxyInterface;
 
 /**
  *
@@ -75,6 +80,25 @@ public class LoginController implements Initializable {
     
     private int index_user;
     
+//    Proxy proxy = null;
+//    
+//        Thread t = new Thread(new Runnable(){
+//        @Override
+//        public void run(){
+//            
+//           
+//        try {
+//            proxy = new Proxy(3000);
+//        } catch (IOException ex) {
+//            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//            // blocking call
+//        }        
+//    });
+    
+    public LoginController() throws SocketException, IOException{
+    }
+    
     /// -- 
    
     
@@ -91,7 +115,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    public void handleButtonAction(MouseEvent event) {
+    public void handleButtonAction(MouseEvent event) throws IOException {
 
         if (event.getSource() == btnSignup) {
       
@@ -127,7 +151,7 @@ public class LoginController implements Initializable {
                     stage.setScene(new Scene(root));
                     stage.setResizable(false);
                     stage.show();
-                    setLogin.setCurrentUser(currentUser, index_user);
+                    setLogin.setCurrentUser(currentUser);
 
 //                    HomeUIController setCurrent = new HomeUIController();
 //                    setCurrent.setCurrentUser(currentUser);
@@ -142,54 +166,47 @@ public class LoginController implements Initializable {
     
         @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+           // t.start();
+
 
     }
 
 
 
-    private String logIn() {
+    private String logIn() throws IOException {
 
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         
         Gson gson = new Gson(); 
         BufferedReader bufReader;
-        List<User> userList = null;
+        User user= null;
+        ProxyInterface proxy = new Proxy(3000);
         
-        try {         
-          
-            bufReader = new BufferedReader(new FileReader("src/files/users.json"));
-            bufReader.mark(10);   
-            if(bufReader.read() != -1){
-                bufReader.reset();
-                Type listType = new TypeToken<List<User>>() {}.getType();
-                userList = gson.fromJson(bufReader, listType); 
-            }
-            else{
-                System.err.println("No user account was created!");
-            }
-            bufReader.close();
-            
-            for(User user : userList) {
-                index_user++;
-                if(user.getEmail().equals(username) && user.checkPassword(password)) {
-                    currentUser = user;
-                     
+        try {  
 
-                    
-                    return "Success";
-                }
+            JsonObject jsonResponse = proxy.synchExecution("LoginUser", new String[] {username, String.valueOf(password)});
+            String response = jsonResponse.get("ret").getAsString();
+            System.out.println(response +"hi");
+            if(response.equals("false")) {
+                //t.interrupt();
+                return "Error";
             }
-       
-            
-            
+            else if (response.equals("false")){
             labelErrors.setTextFill(Color.TOMATO);
             labelErrors.setText("Invalid Username/Password");
             System.err.println("Wrong Login --///");
+                       //    t.interrupt();
             return "Error";
-
-
+            }
+            else {
+                     currentUser = user;
+  
+                    return "Success";
+            
+            }
+                
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             return "Exception";

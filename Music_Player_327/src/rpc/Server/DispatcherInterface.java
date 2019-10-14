@@ -1,3 +1,5 @@
+package rpc.Server;
+
 
 
 public interface DispatcherInterface {

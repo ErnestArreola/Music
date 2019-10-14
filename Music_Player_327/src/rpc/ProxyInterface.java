@@ -1,3 +1,5 @@
+package rpc;
+
 import com.google.gson.JsonObject;
 
 public interface ProxyInterface {
@@ -18,7 +20,8 @@ public interface ProxyInterface {
               "song":"songId",
               "fragment":2,
           },
-   }
+   }]
+    
 }
     * and sends it using the "send" method of CommunicationModule
     * @param  remoteMethod: Name of the remote method. The remote methods
