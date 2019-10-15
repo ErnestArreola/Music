@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rpc;
 
 import com.google.gson.JsonObject;
@@ -10,86 +15,106 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 /**
  *
  * @author sovathana
  */
 public class CommunicationModule {
-    static final int FRAGMENT_SIZE = 15000;
+    
     private byte[] buf = new byte[1024];
-    private static int PORT;
+    private static final int PORT = 3000;
     private static InetAddress address; 
     
-    private DatagramSocket socket = null;
-    
-    
-    public void connect(int port){
-    try {
-        
-    this.address= InetAddress.getByName("localhost");
-    
-    this.socket = new DatagramSocket();
-    
-    this.PORT = port;
-   
-    
-    
-    
-    
-    } catch (UnknownHostException e){
-        e.printStackTrace();
-}
-    
-    catch(IOException e){
-    e.printStackTrace();
-    }
-    }
+    private final DatagramSocket socket = new DatagramSocket();
     
 
     
     public CommunicationModule() throws SocketException {
+        try {
+            System.out.println("Getting Inet Address");
+            address = InetAddress.getLocalHost();
+
+        } catch (UnknownHostException ex) {
+
+            Logger.getLogger(CommunicationModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println("Connecting socket");
+        socket.connect(address, PORT);
+        
+    } 
+    
+    
+    
+    public String send(JsonObject jsonRequest) throws IOException{
+        
+        System.out.println("Send is called");
+        byte[] buf = jsonRequest.toString().getBytes();
+        int length = jsonRequest.toString().getBytes().length;
+        
+//        byte buf [] = "Hello from client".getBytes();
+//        int length = 17;
+        
+        
+        
+        DatagramSocket dataSocket = new DatagramSocket();
+        socket.send(new DatagramPacket(buf, length, address, PORT));
+        System.out.println("Packet is sent.");
+        DatagramPacket reply = new DatagramPacket(buf, buf.length);
+        socket.receive(reply);
+        String receivedMessage = new String(buf, 0, buf.length);
+        System.out.println(receivedMessage + "Hey");
+        
+        return receivedMessage;
+    }
+    
+    
+//    public static void main(String[] args){
+//        
+//        System.out.println("Main started");
+//        
+//        JsonObject jsonRequest = new JsonObject();
+//        JsonObject jsonParam = new JsonObject();
+//        System.out.println("jsonObject is made");
+//        
+//        jsonRequest.addProperty("remoteMethod", "a remote method");
+//        jsonRequest.addProperty("objectName", "Hello");
+//        
+//        jsonParam.addProperty("song", "param 1");
+//        jsonParam.addProperty("fragment", "param 2");       
+//        jsonRequest.add("Param", jsonParam);
+//        
+//        System.out.println("jsonRequest is made");
+//        
+//        System.out.println("DatagramPacket is being made");
+//        byte[] buffer = new byte[1024];
+//        DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+//        
+//        System.out.println("DatagramPacket is made");
 //        try {
-//            address = InetAddress.getByName("localhost");
-//
-//        } catch (UnknownHostException ex) {
-//
-//            Logger.getLogger(CommunicationModule.class.getName()).log(Level.SEVERE, null, ex);
+//            System.out.println("Request is being sent to server.");
+//            reply = (new ClientModule()).send(jsonRequest);
+//            System.out.println("Request is sent to server.");
+//        } catch (SocketException ex) {
+//            System.out.println(">>>>>>>>> SocketException.");
+//            Logger.getLogger(ClientModule.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            System.out.println(">>>>>>>>> IOException.");
+//            Logger.getLogger(ClientModule.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        
+//        System.out.println("reply from server: " + Arrays.toString(reply.getData()));
+//
+//
 //        
-//        socket.connect(address, PORT);
-    }
-    
-    
-    
-    public String send(String request) throws IOException{
-        
-        String response = "";
-        try {
-        buf = new byte[FRAGMENT_SIZE];
-        byte[] buffer = new byte[FRAGMENT_SIZE];
-        buffer = request.getBytes();
-        DatagramPacket requestPacket = new DatagramPacket(buffer,buffer.length, this.address, this.PORT);
-        System.out.println("Client sending request packet to server..");
-        int length = request.toString().getBytes().length;
-        socket.send(requestPacket);
-        
-        
-        byte[] responseData = new byte[FRAGMENT_SIZE];
-        DatagramPacket reply = new DatagramPacket(responseData, responseData.length);
-        socket.receive(reply);
-        System.out.println("reply received" + reply);
-        response = new String(reply.getData());
-        socket.close();
-        
-        }catch (IOException e){
-        e.printStackTrace();
-        }
-        return response;
-        }
-    }
-    
-    
+//    }
 
+//    @Override
+//    public void start(Stage primaryStage) throws Exception {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
     
+}

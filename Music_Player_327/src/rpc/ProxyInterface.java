@@ -43,6 +43,8 @@ public interface ProxyInterface {
     * 
     */
     public void asynchExecution(String remoteMethod, String[] param);
+    
+    public void tryMe();
 }
 
 

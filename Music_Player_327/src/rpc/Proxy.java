@@ -11,6 +11,7 @@ package rpc;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
@@ -29,10 +30,12 @@ public class Proxy implements ProxyInterface {
    
 
     //Dispatcher dispacher;   // This is only for test. it should use the Communication  Module
-    public Proxy(int portNumber) throws SocketException, IOException
+    public Proxy() throws SocketException, IOException
     {
+            System.out.println("proxy constructor");
             this.cModule = new  CommunicationModule();
-            cModule.connect(portNumber);
+            
+           // cModule.connect(portNumber);
             this.remoteRef = new RemoteReference(cModule);
         
     }
@@ -43,20 +46,23 @@ public class Proxy implements ProxyInterface {
     
     */
     
+    public void tryMe(){
+    System.out.println("Here");
+    }
     
-
     public JsonObject synchExecution(String remoteMethod, String[] param)
     {
         JsonObject jsonRequest = remoteRef.getRemoteRef(remoteMethod);
         JsonObject jsonParam = jsonRequest.get("param").getAsJsonObject();
+        System.out.println(jsonRequest);
+        System.out.println(jsonParam);
         
         
 //        for (int i = 0; i < param.length; i++) {
 //        jsonParam.addProperty(Integer.toString(i), param[i]);
 //        
 //        }
-                
-        
+               
         TreeSet<String> methodName = new TreeSet<>(jsonParam.keySet());
         int i = 0;
         
@@ -71,15 +77,15 @@ public class Proxy implements ProxyInterface {
         System.out.println("Sending Request: " + jsonRequest.toString());
         String ret = null;
         try {
-            ret = cModule.send(jsonRequest.toString());
+            ret = cModule.send(jsonRequest);
         } catch (IOException ex) {
             Logger.getLogger(Proxy.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Returning response from server to input stream: " + ret);
         
-        String finalReturn = ret.trim();
+        String finalReturn = ret.toString();
         
-        
+//        String finalReturn = "me";
         
         return parser.parse(finalReturn).getAsJsonObject();
         
@@ -137,7 +143,7 @@ public class Proxy implements ProxyInterface {
         JsonParser parser = new JsonParser();
         System.out.println("Sending request: " + jsonRequest.toString());
         try {
-            cModule.send(jsonRequest.toString());
+            cModule.send(jsonRequest);
         } catch (IOException ex) {
             Logger.getLogger(Proxy.class.getName()).log(Level.SEVERE, null, ex);
         }

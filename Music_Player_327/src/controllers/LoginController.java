@@ -44,9 +44,9 @@ import com.google.gson.JsonObject;
 import java.net.SocketException;
 import javafx.scene.Parent;
 import javafx.scene.control.PasswordField;
-import rpc.CommunicationModule;
 import rpc.Proxy;
 import rpc.ProxyInterface;
+import rpc.CommunicationModule;
 
 /**
  *
@@ -80,21 +80,29 @@ public class LoginController implements Initializable {
     
     private int index_user;
     
-//    Proxy proxy = null;
-//    
-//        Thread t = new Thread(new Runnable(){
-//        @Override
-//        public void run(){
-//            
-//           
+    Proxy proxy = null;
+   
+    
+        Thread t = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                proxy = new Proxy();
+                System.out.println(proxy);
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
+           
 //        try {
-//            proxy = new Proxy(3000);
+//           // proxy = new Proxy(3000);
 //        } catch (IOException ex) {
 //            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-//            // blocking call
-//        }        
-//    });
+//            
+        }        
+    });
     
     public LoginController() throws SocketException, IOException{
     }
@@ -167,7 +175,7 @@ public class LoginController implements Initializable {
         @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-           // t.start();
+            t.start();
 
 
     }
@@ -181,14 +189,14 @@ public class LoginController implements Initializable {
         
         Gson gson = new Gson(); 
         BufferedReader bufReader;
-        User user= null;
-        ProxyInterface proxy = new Proxy(3000);
+        User user = null;
+       // Proxy proxy = new Proxy(3000);
         
-        try {  
+        try { 
 
-            JsonObject jsonResponse = proxy.synchExecution("LoginUser", new String[] {username, String.valueOf(password)});
+            JsonObject jsonResponse = proxy.synchExecution("LoginUser", new String[] {username, password});
             String response = jsonResponse.get("ret").getAsString();
-            System.out.println(response +"hi");
+            System.out.println("What ! ! ! !!  ");
             if(response.equals("false")) {
                 //t.interrupt();
                 return "Error";
@@ -213,4 +221,4 @@ public class LoginController implements Initializable {
         } 
 
     }
-}
+};
