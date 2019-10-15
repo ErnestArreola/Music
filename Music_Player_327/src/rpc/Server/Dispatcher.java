@@ -51,14 +51,12 @@ public class Dispatcher implements DispatcherInterface {
         JsonObject jsonReturn = new JsonObject();
         JsonParser parser = new JsonParser();
         JsonObject jsonRequest = parser.parse(request).getAsJsonObject();
-        System.out.println("IN here" + jsonRequest + "JsonRequest");
         
         try {
             // Obtains the object pointing to SongServices
-        	
-        	System.out.println(ListOfObjects);
-        	System.out.println(jsonRequest.get("objectName").getAsString());
-            Object object = ListOfObjects.get(jsonRequest.get("objectName").getAsString());
+        	System.out.println("object >>>>>> " + jsonRequest.get("object").getAsString());
+        	System.out.println("object >>>>>> " + jsonRequest.get("remoteMethod").getAsString());
+            Object object = ListOfObjects.get(jsonRequest.get("object").getAsString());
             Method[] methods = object.getClass().getMethods();
             Method method = null;
             // Obtains the method
@@ -118,7 +116,7 @@ public class Dispatcher implements DispatcherInterface {
         } catch (InvocationTargetException | IllegalAccessException e)
         {
         //    System.out.println(e);
-            jsonReturn.addProperty("error", "Error on " + jsonRequest.get("objectName").getAsString() + "." + jsonRequest.get("remoteMethod").getAsString());
+            jsonReturn.addProperty("error", "Error on " + jsonRequest.get("object").getAsString() + "." + jsonRequest.get("remoteMethod").getAsString());
         }
      
         return jsonReturn.toString();

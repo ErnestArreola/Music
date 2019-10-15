@@ -1,3 +1,4 @@
+
 [
     {
       "remoteMethod": "register",
@@ -7,6 +8,16 @@
       "user": "java.lang.String"
     }
   },
+  
+    {
+    "remoteMethod":"getSongChunk",
+    "object":"SongServices",
+    "param":
+      {
+          "song":490183,
+          "fragment":2
+      }
+}, 
 
    {
      "remoteMethod": "LoginUser",

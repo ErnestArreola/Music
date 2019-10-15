@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  */
 public class CommunicationModule {
     
-    private byte[] buf = new byte[1024];
+    private byte[] buf = new byte[15000];
     private static final int PORT = 3000;
     private static InetAddress address; 
     
@@ -63,9 +63,11 @@ public class CommunicationModule {
         DatagramSocket dataSocket = new DatagramSocket();
         socket.send(new DatagramPacket(buf, length, address, PORT));
         System.out.println("Packet is sent.");
-        DatagramPacket reply = new DatagramPacket(buf, buf.length);
+        byte[] resBuf = new byte[15000];
+        DatagramPacket reply = new DatagramPacket(resBuf, resBuf.length);
         socket.receive(reply);
-        String receivedMessage = new String(buf, 0, buf.length);
+       // String receivedMessage = new String(buf, 0, buf.length);
+        String receivedMessage = new String(reply.getData()).trim();
         System.out.println(receivedMessage + "Hey");
         
         return receivedMessage;

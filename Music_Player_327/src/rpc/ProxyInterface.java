@@ -1,6 +1,7 @@
 package rpc;
 
 import com.google.gson.JsonObject;
+import java.util.Map;
 
 public interface ProxyInterface {
     /*
@@ -34,7 +35,7 @@ public interface ProxyInterface {
     *       "ret":""
     *  }
     */
-    public JsonObject synchExecution(String remoteMethod, String[] param);
+    public JsonObject synchExecution(String remoteMethod, String [] param);
 
     /*
     * Executes the  remote method remoteMethod and returns without waiting

@@ -39,7 +39,6 @@ public class LoginDispatcher {
      */
     public String LoginUser(String username, String password) throws IOException{
         Gson gson = new Gson();
-        System.out.println("HEY YOU");
         List<User> userList = null;
         BufferedReader bufReader;
         //get the User lists first

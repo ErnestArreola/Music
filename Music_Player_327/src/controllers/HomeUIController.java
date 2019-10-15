@@ -79,6 +79,8 @@ import model.Songs;
 
 
     import javafx.scene.control.TextInputDialog;
+import rpc.Proxy;
+import rpc.ProxyInterface;
 
 
 
@@ -233,10 +235,22 @@ public class HomeUIController implements Initializable {
                
                 @FXML
     private TableView<playlistSongs> playlistSong_View;
+                
+                
+   ProxyInterface proxy = null;
 
     
-
-
+        Thread t = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                proxy = new Proxy();
+                System.out.println(proxy);
+            } catch (IOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        });
     
 //    @FXML private TableColumn Music name;
 //    @FXML private TableColumn<Artist, String> names;   
@@ -296,6 +310,7 @@ public class HomeUIController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 //         Scrollpane.setHbarPolicy(ScrollBarPolicy.NEVER);
 //         Scrollpane.setVbarPolicy(ScrollBarPolicy.NEVER);
+        t.start();
          try{
          addMusicToList();
          callSearch();
@@ -469,8 +484,8 @@ public class HomeUIController implements Initializable {
        playpauseIcon.setIcon(FontAwesomeIcon.PAUSE);
            try {
               input = new FileInputStream(file); 
-              player = new MusicPlayer(input);
-              playMusic();
+              player = new MusicPlayer(new CECS327InputStream((long)490183, proxy));
+              //playMusic();
 	     }
 	     catch (JavaLayerException exception) 
          {

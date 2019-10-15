@@ -160,6 +160,7 @@ public class LoginController implements Initializable {
                     stage.setResizable(false);
                     stage.show();
                     setLogin.setCurrentUser(currentUser);
+                    t.interrupt();
 
 //                    HomeUIController setCurrent = new HomeUIController();
 //                    setCurrent.setCurrentUser(currentUser);
@@ -189,14 +190,22 @@ public class LoginController implements Initializable {
         
         Gson gson = new Gson(); 
         BufferedReader bufReader;
-        User user = null;
+        User user = new User ("Greg", "logan", "admin", "password");
        // Proxy proxy = new Proxy(3000);
-        
+       
+//       user.setFirstName("Greg");
+//       user.setLastName("logan");
+//       user.setEmail("admin");
+//       user.setPassword("password");
+//       currentUser = user;
+//       return "Success";
+      
         try { 
 
             JsonObject jsonResponse = proxy.synchExecution("LoginUser", new String[] {username, password});
+            System.out.println("YESSSSSSSSSS");
             String response = jsonResponse.get("ret").getAsString();
-            System.out.println("What ! ! ! !!  ");
+            System.out.println("What ! ! ! !!  " + response);
             if(response.equals("false")) {
                 //t.interrupt();
                 return "Error";
