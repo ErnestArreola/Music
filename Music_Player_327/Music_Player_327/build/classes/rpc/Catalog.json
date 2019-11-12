@@ -1,0 +1,140 @@
+
+[
+    {
+      "remoteMethod": "register",
+    "object": "UserServices",
+    "call-semantics": "at-most-one",
+    "param": {
+      "user": "java.lang.String"
+    }
+  },
+   {
+    "remoteMethod": "addSongPlaylist",
+    "object": "PlaylistServices",
+    "call-semantics": "maybe",
+    "param": {
+      "currentUser": "java.lang.String",
+      "song": "java.lang.String",
+      "album": "java.lang.String",
+      "artist": "java.lang.String",
+      "playlistName": "java.lang.String"
+    }
+  },
+
+ {
+    "remoteMethod": "getPlaylist",
+    "object": "PlaylistServices",
+    "call-semantics": "maybe",
+    "param": {
+      "currentUser": "User.class"
+    }
+  },
+
+ {
+    "remoteMethod": "createPlaylist",
+    "object": "PlaylistServices",
+    "call-semantics": "maybe",
+    "param": {
+      "currentUser": "java.lang.String",
+      "playlistName": "java.lang.String"
+  	}
+ },
+
+{
+    "remoteMethod": "deletePlaylist",
+    "object": "PlaylistServices",
+    "call-semantics": "maybe",
+    "param": {
+      "currentUser": "java.lang.String",
+      "playlistName": "java.lang.String"
+  	}
+ },
+  
+ {
+    "remoteMethod": "getSongChunk",
+    "object": "SongServices",
+    "call-semantics": "maybe",
+    "param": {
+      "song": "java.lang.Long",
+      "fragment": "java.lang.Long"
+    },
+    "return": "java.lang.Byte[]"
+  },
+
+   {
+     "remoteMethod": "LoginUser",
+    "object": "LoginServices",
+    "call-semantics": "at-most-one",
+    "param": {
+      "user": "java.lang.String",
+      "password": "java.lang.String"
+    }
+  },
+
+  {
+    "remoteMethod": "addToPlaylist",
+    "object": "SongServices",
+    "call-semantics": "maybe",
+    "param": {
+      "song": "java.lang.Long"
+    }
+  },
+
+
+  {
+    "remoteMethod": "getCatalog",
+    "object": "RemoteRefServices",
+    "call-semantics": "at-most-one",
+    "param": {
+      "test": "blah"
+    }
+  },
+    {
+    "remoteMethod": "getBrowseMusic",
+    "object": "MusicServices",
+    "call-semantics": "at-most-one",
+    "param": {
+      "songCount": "java.lang.String"
+    },
+    "return": "java.util.List;"
+  },
+    {
+    "remoteMethod": "getSearchMusic",
+    "object": "MusicServices",
+    "call-semantics": "at-most-one",
+    "param": {
+      "searchQuery": "java.lang.String"
+    },
+    "return": "java.util.List;"
+  },
+
+  {
+    "remoteMethod": "getSongsFromServer",
+    "object": "MusicServices",
+    "call-semantics": "at-least-one",
+    "param": {
+      "test": "blah"
+    },
+    "return":"java.util.List;"
+  },
+
+  {
+    "remoteMethod": "searchSongsFromServer",
+    "object": "MusicServices",
+    "call-semantics": "at-least-one",
+    "param": {
+      "song": "blah"
+    },
+    "return":"java.util.List;"
+  },
+
+  {
+    "remoteMethod": "getFileSize",
+    "object": "SongServices",
+    "call-semantics": "at-least-one",
+    "param": {
+      "song": "java.lang.Long"
+    },
+    "return": "java.lang.Integer"
+  }
+]
