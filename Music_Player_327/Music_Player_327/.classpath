@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="Main/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src/Main"/>
+	<classpathentry kind="lib" path="/Users/AppleSauce/Documents/GitHub/Music/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/AppleSauce/Documents/GitHub/Music/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="/Users/AppleSauce/Documents/GitHub/Music/jfoenix-8.0.8.jar"/>
+	<classpathentry kind="lib" path="/Users/AppleSauce/Documents/GitHub/Music/Music_Player_327/dist/lib/controlsfx-8.40.15.jar"/>
+	<classpathentry kind="lib" path="/Users/AppleSauce/Documents/GitHub/Music/Music_Player_327/dist/lib/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/AppleSauce/Documents/GitHub/Music/Music_Player_327/dist/lib/fontawesomefx-commons-8.15.jar"/>
+	<classpathentry kind="lib" path="/Users/AppleSauce/Documents/GitHub/Music/Music_Player_327/dist/lib/jfoenix-8.0.8.jar"/>
+	<classpathentry kind="lib" path="/Users/AppleSauce/Documents/GitHub/Music/Music_Player_327/dist/lib/fontawesomefx-fontawesome-4.7.0-5.jar"/>
+	<classpathentry kind="lib" path="/Users/AppleSauce/Documents/GitHub/Music/Music_Player_327/dist/lib/gson-2.8.5.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
