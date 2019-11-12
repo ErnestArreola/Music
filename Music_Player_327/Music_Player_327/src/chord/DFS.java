@@ -1,3 +1,5 @@
+//package chord;
+
 import java.rmi.*;
 import java.net.*;
 import java.util.*;
@@ -10,7 +12,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import model.DateTime;
+
 
 
 /* JSON Format
@@ -204,7 +206,7 @@ public class DFS
 		public void setPages(ArrayList<PagesJson> pages) {
 			this.pages = pages;
 		}
-
+                
 		public ArrayList<PagesJson> getPages() {
 			return this.pages;
 		}
@@ -251,6 +253,18 @@ public class DFS
 			return files.size();
 		}
 
+                
+                public FileJson getFile(String filename){
+			
+                    for(int i = 0; i < this.getSize(); i++){
+                        if(this.getFileJsonAt(i).getName().equals(filename)){
+                            return this.getFileJsonAt(i);
+                        }
+                    }
+                    return null;
+		}
+                
+                
 		@Override
 		public String toString() {
 			String str = "";
@@ -381,8 +395,22 @@ public class DFS
  */
     public void move(String oldName, String newName) throws Exception
     {
-        // TODO:  Change the name in Metadata
-        // Write Metadata
+        
+        //retrieving metadata
+        FilesJson retrievedMetadata = this.readMetaData();
+        FileJson file = retrievedMetadata.getFile(oldName);
+        
+        //file is not found in metadata
+        if(file == null){
+            System.out.println("Error: file is not found!!!");
+            return;
+        }
+        
+        //set new name, set new write Timestamp and save metadata
+        file.setName(newName);
+        file.setWriteTimeStamp(DateTime.retrieveCurrentDate());
+        this.writeMetaData(retrievedMetadata);
+        
     }
 
   
@@ -467,8 +495,6 @@ public class DFS
 		}
 		// update the meta data
 		this.writeMetaData(retrievedMetadata);
-     
-        
     }
     
 /**
@@ -479,7 +505,21 @@ public class DFS
  */
     public RemoteInputFileStream read(String fileName, int pageNumber) throws Exception
     {
-        return null;
+        //retrieving metadata
+        FilesJson retrievedMetadata = this.readMetaData();
+        FileJson file = retrievedMetadata.getFile(fileName);
+        PagesJson page = file.getPages().get(pageNumber);
+        
+        //get FileStream
+        ChordMessageInterface peer = chord.locateSuccessor(page.getGuid());
+        RemoteInputFileStream fileStream = peer.get(page.getGuid());
+        
+        //Update read timestamp and save metadata
+        page.setReadTimeStamp(DateTime.retrieveCurrentDate());
+        file.setReadTimeStamp(DateTime.retrieveCurrentDate());
+        this.writeMetaData(retrievedMetadata);
+        
+        return fileStream;
     }
     
  /**

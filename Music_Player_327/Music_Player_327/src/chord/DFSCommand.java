@@ -1,8 +1,10 @@
+//package chord;
+
 
 import java.io.*;
 import com.google.gson.*;
 import com.google.gson.stream.*;
-import model.Music;
+//import model.Music;
 
 
 
@@ -10,7 +12,7 @@ import model.Music;
 public class DFSCommand
 {
     DFS dfs;
-        
+    
     public DFSCommand(int p, int portToJoin) throws Exception {
         dfs = new DFS(p);
         
@@ -42,21 +44,60 @@ public class DFSCommand
             {
                 dfs.leave();     
             }
-            if(result[0].equals("delete")) {
-            	dfs.delete(result[1]);
-            }
-            if(result[0].equals("append")) {
-            	RemoteInputFileStream data = new RemoteInputFileStream(result[2]);
-            	dfs.append(result[1], data);
+            //================================================================>  TO DO
+            if (result[0].equals("touch"))
+            {
+                dfs.create(result[1]);
             }
             
+            if (result[0].equals("delete"))
+            {
+                dfs.delete(result[1]);
+            }
+            
+            if (result[0].equals("read"))
+            {
+                int pageNum = Integer.parseInt(result[2]);
+                String fileName = result[1];
+                RemoteInputFileStream fileStream = dfs.read(fileName,pageNum);
+                printStream(fileStream);
+            }
+            
+            if (result[0].equals("head"))
+            {
+                     
+            }
+            
+            if (result[0].equals("tail"))
+            {
+                     
+            }
+            
+            if (result[0].equals("append"))
+            {
+                
+            }
+            
+            if (result[0].equals("move"))
+            {
+                dfs.move(result[1], result[2]);
+            }
             
             line=buffer.readLine();  
         }
-        
             // User interface:
             // join, ls, touch, delete, read, tail, head, append, move
     }
+    
+    public static void printStream(RemoteInputFileStream fileStream) throws Exception{
+        fileStream.connect();
+        System.out.println();
+        while(fileStream.available() > 0){
+            System.out.print((char)fileStream.read());
+        }
+        System.out.println();
+    }
+    
     
     static public void main(String args[]) throws Exception
     {
@@ -65,8 +106,8 @@ public class DFSCommand
         in.connect();
         Reader targetReader = new InputStreamReader(in);
         JsonReader jreader = new  JsonReader(targetReader);
-        Music[] music = gson.fromJson(jreader, Music[].class);
-        
+//        Music[] music = gson.fromJson(jreader, Music[].class);
+      
         if (args.length < 1 ) {
             throw new IllegalArgumentException("Parameter: <port> <portToJoin>");
         }
