@@ -140,104 +140,99 @@ public class DFS
     };
 
     public class FileJson {
-		String name;
-		Long size;
-		String creationTimeStamp;
-		String readTimeStamp;
-		String writeTimeStamp;
-		String referenceCount;
-		ArrayList<PagesJson> pages;
-                List<FileJson> files;
+        String name;
+        Long size;
+        String creationTimeStamp;
+        String readTimeStamp;
+        String writeTimeStamp;
+        String referenceCount;
+        int numberOfPages;
+        ArrayList<PagesJson> pages;
+        List<FileJson> files;
                 
         public FileJson()
         {
             
         }
-                 public List<FileJson> getFiles(){return this.files;}
-        
-                 public FileJson getFile(int index){return this.files.get(index);}
-                 
-                          public int getFilesSize(){return this.files.size();}
+        public List<FileJson> getFiles(){return this.files;}
 
+        public FileJson getFile(int index){return this.files.get(index);}
                  
-             public FileJson getFile(String filename){
-             FileJson file = null;
-             for(int i = 0; i < getFilesSize(); i++){
-                 if(this.files.get(i).getName().equals(filename)){
-                     return this.files.get(i);
-                 }
-             }
-             return null;
-         }
+            
 
         
-        	public void setName(String name) {
-			this.name = name;
-		}
+        public void setName(String name) {
+                this.name = name;
+        }
 
-		public String getName() {
-			return name;
-		}
+        public String getName() {
+                return name;
+        }
 
-		public void setSize(Long size) {
-			this.size = size;
-		}
+        public void setSize(Long size) {
+                this.size = size;
+        }
 
-		public Long getSize() {
-			return size;
-		}
+        public Long getSize() {
+                return size;
+        }
 
-		public void setCreationTimeStamp(String creationTS) {
-			this.creationTimeStamp = creationTS;
-		}
+        public void setCreationTimeStamp(String creationTS) {
+                this.creationTimeStamp = creationTS;
+        }
 
-		public String getCreationTimeStap() {
-			return creationTimeStamp;
-		}
+        public String getCreationTimeStap() {
+                return creationTimeStamp;
+        }
 
-		public void setReadTimeStamp(String readTS) {
-			this.readTimeStamp = readTS;
-		}
+        public void setReadTimeStamp(String readTS) {
+                this.readTimeStamp = readTS;
+        }
 
-		public String getReadTimeStamp() {
-			return readTimeStamp;
-		}
+        public String getReadTimeStamp() {
+                return readTimeStamp;
+        }
 
-		public void setWriteTimeStamp(String writeTS) {
-			this.writeTimeStamp = writeTS;
-		}
+        public void setWriteTimeStamp(String writeTS) {
+                this.writeTimeStamp = writeTS;
+        }
 
-		public String getWriteTimeStamp(String readTS) {
-			return writeTimeStamp;
-		}
+        public String getWriteTimeStamp(String readTS) {
+                return writeTimeStamp;
+        }
 
-		public void setReferenceCount(String refCount) {
-			this.referenceCount = refCount;
-		}
+        public void setReferenceCount(String refCount) {
+                this.referenceCount = refCount;
+        }
 
-		public String getReferenceCount() {
-			return referenceCount;
-		}
+        public String getReferenceCount() {
+                return referenceCount;
+        }
 
-		public void setPages(ArrayList<PagesJson> pages) {
-			this.pages = pages;
-		}
+        public void setPages(ArrayList<PagesJson> pages) {
+                this.pages = pages;
+        }
 
-		public ArrayList<PagesJson> getPages() {
-			return this.pages;
-		}
+        public ArrayList<PagesJson> getPages() {
+                return this.pages;
+        }
+        
+        public void setNumOfPage(int numOfPage) {
+            this.numberOfPages = numOfPage;
+        }
+        
 
-		@Override
-		public String toString() {
-			String result = "Name: " + name + "\n" + "Size: " + size + "\n" + "Creation TimeStamp: " + creationTimeStamp
-					+ "\n" + "Read Time: " + readTimeStamp + "\n" + "Write Time: " + writeTimeStamp + "\n"
-					+ "Reference Count: " + referenceCount + "\n" + "Pages: {\n";
-			for (PagesJson tpages : pages) {
-				result += (tpages.toString() + "\n");
-			}
-			result += "}\n";
-			return result;
-		}
+        @Override
+        public String toString() {
+                String result = "Name: " + name + "\n" + "Size: " + size + "\n" + "Creation TimeStamp: " + creationTimeStamp
+                                + "\n" + "Read Time: " + readTimeStamp + "\n" + "Write Time: " + writeTimeStamp + "\n"
+                                + "Reference Count: " + referenceCount + "\n" + "Pages: {\n";
+                for (PagesJson tpages : pages) {
+                        result += (tpages.toString() + "\n");
+                }
+                result += "}\n";
+                return result;
+        }
         // getters
         // setters
     };
@@ -277,7 +272,18 @@ public class DFS
 			}
 			return str;
 		}
-                
+            public int getFilesSize(){return this.files.size();}
+
+                 
+            public FileJson getFile(String filename){
+                FileJson file = null;
+                for(int i = 0; i < getFilesSize(); i++){
+                    if(this.files.get(i).getName().equals(filename)){
+                        return this.files.get(i);
+                    }
+                }
+                return null;
+            }
                 
     };
     
@@ -421,23 +427,23 @@ public class DFS
   *
  * @param filename Name of the file
  */
-	public String lists() throws Exception {
-		Gson gson = new Gson();
+    public String lists() throws Exception {
+        Gson gson = new Gson();
 
-		FilesJson allFiles = gson.fromJson(" ", FilesJson.class);
-		// traverse the current files in the metadata
-		for (int i = 0; i < allFiles.getFiles().size(); i++) {
-			FileJson currentFile = allFiles.getFiles().get(i);
-			System.out.println(currentFile.getName() + " " + currentFile.getSize());
-			// traverse the pages in the current file
-			for (int j = 0; j < currentFile.getPages().size(); j++) {
-				PagesJson currentPage = currentFile.getPages().get(j);
-				// System.out.println(currentPage.getGuid() + " " + currentPage.getSize());
-			}
-		}
-		String listOfFiles = " ";
+        FilesJson allFiles = gson.fromJson(" ", FilesJson.class);
+        // traverse the current files in the metadata
+        for (int i = 0; i < allFiles.getFiles().size(); i++) {
+            FileJson currentFile = allFiles.getFiles().get(i);
+            System.out.println(currentFile.getName() + " " + currentFile.getSize());
+            // traverse the pages in the current file
+            for (int j = 0; j < currentFile.getPages().size(); j++) {
+                PagesJson currentPage = currentFile.getPages().get(j);
+                // System.out.println(currentPage.getGuid() + " " + currentPage.getSize());
+            }
+        }
+        String listOfFiles = " ";
 
-		return listOfFiles;
+        return listOfFiles;
 //        FilesJson md = this.readMetaData();
 //        String FileList = " ";
 //        for (int i = 0; i < md.getSize(); i++) {
@@ -445,7 +451,7 @@ public class DFS
 //            FileList += " " + FileName + "\n";
 //        }
 //        return FileList;
-	}
+    }
 
 /**
  * create an empty file 
@@ -477,35 +483,50 @@ public class DFS
  */
     public void delete(String fileName) throws Exception
     {
-		FilesJson retrievedMetadata = this.readMetaData();
+        FilesJson retrievedMetadata = this.readMetaData();
 
-		boolean fileFound = false;
-		int index = 0;
-		// traverse all the files in the metadata to see if the desired file is in the
-		// list of files
-		for (int i = 0; i < retrievedMetadata.getFiles().size(); i++) {
-			if (retrievedMetadata.getFiles().get(i).equals(fileName)) {
-				fileFound = true;
-			}
-			index++;
-		}
-		// if file has been found, then remove it from the list of files
-		if (fileFound == true) {
-			FileJson selectedFile = retrievedMetadata.getFiles().get(index);
-			for (PagesJson page : selectedFile.getPages()) {
-				long guid = page.getGuid();
-				ChordMessageInterface peer = chord.locateSuccessor(guid);
-				peer.delete(guid);
-			}
-			retrievedMetadata.getFiles().remove(index);
-		}
-		// update the meta data
-		this.writeMetaData(retrievedMetadata);
+        boolean fileFound = false;
+        int index = 0;
+        // traverse all the files in the metadata to see if the desired file is in the
+        // list of files
+        for (int i = 0; i < retrievedMetadata.getFiles().size(); i++) {
+            if (retrievedMetadata.getFiles().get(i).equals(fileName)) {
+                fileFound = true;
+            }
+            index++;
+        }
+        // if file has been found, then remove it from the list of files
+        if (fileFound == true) {
+            FileJson selectedFile = retrievedMetadata.getFiles().get(index);
+            for (PagesJson page : selectedFile.getPages()) {
+                long guid = page.getGuid();
+                ChordMessageInterface peer = chord.locateSuccessor(guid);
+                peer.delete(guid);
+            }
+            retrievedMetadata.getFiles().remove(index);
+        }
+        // update the meta data
+        this.writeMetaData(retrievedMetadata);
      
         
     }
     
-        public RemoteInputFileStream tail(String filename) throws Exception {
+    /**
+     * Read the head of this file         
+     *
+     * @param filename Name of the file
+     */
+    public RemoteInputFileStream head(String filename) throws Exception
+    {
+        return read(filename,0);
+    } 
+
+    /**
+     * Read the last page of this file         
+     *
+     * @param filename Name of the file
+     */
+    public RemoteInputFileStream tail(String filename) throws Exception {
         FilesJson files = readMetaData();
         FileJson file = files.getFile(filename);
         ArrayList<PagesJson> pages = file.getPages();
@@ -527,26 +548,19 @@ public class DFS
  * @param filename Name of the file
  * @param pageNumber number of block. 
  */
-    public RemoteInputFileStream read(String fileName, int pageNumber) throws Exception
-    {
-        
-        
+    public RemoteInputFileStream read(String fileName, int pageNumber) throws Exception{
         FilesJson retrievedMetadata = this.readMetaData();	
         FileJson file = retrievedMetadata.getFile(fileName);	
         PagesJson page = file.getPages().get(pageNumber);
         
-        
-         ChordMessageInterface peer = chord.locateSuccessor(page.getGuid());	
+        ChordMessageInterface peer = chord.locateSuccessor(page.getGuid());	
         RemoteInputFileStream fileStream = peer.get(page.getGuid());
  
-         page.setReadTimeStamp(DateTime.retrieveCurrentDate());
-         file.setReadTimeStamp(DateTime.retrieveCurrentDate());
-         this.writeMetaData(retrievedMetadata);
+        page.setReadTimeStamp(DateTime.retrieveCurrentDate());
+        file.setReadTimeStamp(DateTime.retrieveCurrentDate());
+        this.writeMetaData(retrievedMetadata);
          
-         
-         return fileStream;
-        
-        
+        return fileStream;
     }
     
  /**
@@ -555,81 +569,91 @@ public class DFS
  * @param filename Name of the file
  * @param data RemoteInputStream. 
  */
-	public void append(String fileName, RemoteInputFileStream data) throws Exception {
-                Gson gson = new Gson();
-		FilesJson allFiles = this.readMetaData();
-		FileJson foundFile = null;
-
-		int index = 0;
-		for (int i = 0; i < allFiles.getFiles().size(); i++) {
-			if (allFiles.getFiles().get(i).getName().equals(fileName)) {
-				foundFile = allFiles.getFiles().get(i);
-
-				data.connect();
-				Scanner scan = new Scanner(data);
-				scan.useDelimiter("\\A");
-				String strPageData = "";
-				while (scan.hasNext()) {
-					strPageData += scan.next();
-				}
-
-				// get the current DateTime
-				Date currentDate = new Date();
-				DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss a");
-				String formattedTS = dateFormat.format(currentDate);
-
-				PagesJson newPage = gson.fromJson(strPageData, PagesJson.class);
-				foundFile.getPages().add(newPage);
-				foundFile.setReadTimeStamp(formattedTS);
-				foundFile.setWriteTimeStamp(formattedTS);
-				allFiles.getFiles().set(i, foundFile);
-
-				ChordMessageInterface peer = chord.locateSuccessor(newPage.getGuid());
-				peer.put(newPage.getGuid(), gson.toJson(newPage));
-
-				this.writeMetaData(allFiles);
-				scan.close();
-				break;
-
-			}
-
-		}
-			}
-        
-        
-        
-        public void write(String filename, RemoteInputFileStream data, int pageNumber) throws Exception
-    {
+    public void append(String fileName, RemoteInputFileStream data) throws Exception {
         Gson gson = new Gson();
-		FilesJson allFiles = this.readMetaData();
-		FileJson foundFile = null;
-		int index = 0;
-		for (int i = 0; i < allFiles.getFiles().size(); i++) {
-			if (allFiles.getFiles().get(i).getName().equals(filename)) {
-				foundFile = allFiles.getFiles().get(i);
-				data.connect();
-				Scanner scan = new Scanner(data);
-				scan.useDelimiter("\\A");
-				String strPageData = "";
-				while (scan.hasNext()) {
-					strPageData += scan.next();
-				}
-				// get the current DateTime
-				Date currentDate = new Date();
-				DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss a");
-				String formattedTS = dateFormat.format(currentDate);
-				PagesJson newPage = gson.fromJson(strPageData, PagesJson.class);
-				foundFile.getPages().add(newPage);
-				foundFile.setReadTimeStamp(formattedTS);
-				foundFile.setWriteTimeStamp(formattedTS);
-				allFiles.getFiles().set(i, foundFile);
-				ChordMessageInterface peer = chord.locateSuccessor(newPage.getGuid());
-				peer.put(newPage.getGuid(), gson.toJson(newPage));
-				this.writeMetaData(allFiles);
-				scan.close();
-				break;
-			}
-		}
+        FilesJson allFiles = this.readMetaData();
+        FileJson foundFile = null;
+
+        int index = 0;
+        for (int i = 0; i < allFiles.getFiles().size(); i++) {
+            if (allFiles.getFiles().get(i).getName().equals(fileName)) {
+                foundFile = allFiles.getFiles().get(i);
+
+                data.connect();
+                Scanner scan = new Scanner(data);
+                scan.useDelimiter("\\A");
+                String strPageData = "";
+                while (scan.hasNext()) {
+                    strPageData += scan.next();
+                }
+               
+                // get the current DateTime
+                Date currentDate = new Date();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss a");
+                String formattedTS = dateFormat.format(currentDate);
+                
+                // set new file size 
+                Long newFileSize = new Long(data.available()) + foundFile.getSize();
+                foundFile.setSize(newFileSize);
+                
+                PagesJson newPage = gson.fromJson(strPageData, PagesJson.class);
+                foundFile.getPages().add(newPage);
+                foundFile.setNumOfPage(foundFile.getPages().size());
+                foundFile.setReadTimeStamp(formattedTS);
+                foundFile.setWriteTimeStamp(formattedTS);
+                allFiles.getFiles().set(i, foundFile);
+
+                ChordMessageInterface peer = chord.locateSuccessor(newPage.getGuid());
+                peer.put(newPage.getGuid(), gson.toJson(newPage));
+
+                this.writeMetaData(allFiles);
+                scan.close();
+                break;
+
+            }
+
+        }
+    }
+        
+        
+        
+    public void write(String filename, RemoteInputFileStream data, int pageNumber) throws Exception{
+        Gson gson = new Gson();
+        FilesJson allFiles = this.readMetaData();
+        FileJson foundFile = null;
+        int index = 0;
+        for (int i = 0; i < allFiles.getFiles().size(); i++) {
+            if (allFiles.getFiles().get(i).getName().equals(filename)) {
+                foundFile = allFiles.getFiles().get(i);
+                data.connect();
+                Scanner scan = new Scanner(data);
+                scan.useDelimiter("\\A");
+                String strPageData = "";
+                while (scan.hasNext()) {
+                    strPageData += scan.next();
+                }
+                // get the current DateTime
+                Date currentDate = new Date();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss a");
+                String formattedTS = dateFormat.format(currentDate);
+                
+                // set new file size 
+                Long newFileSize = new Long(data.available()) + foundFile.getSize();
+                foundFile.setSize(newFileSize);
+                
+                PagesJson newPage = gson.fromJson(strPageData, PagesJson.class);
+                foundFile.getPages().add(pageNumber, newPage);
+                foundFile.setNumOfPage(foundFile.getPages().size());
+                foundFile.setReadTimeStamp(formattedTS);
+                foundFile.setWriteTimeStamp(formattedTS);
+                allFiles.getFiles().set(i, foundFile);
+                ChordMessageInterface peer = chord.locateSuccessor(newPage.getGuid());
+                peer.put(newPage.getGuid(), gson.toJson(newPage));
+                this.writeMetaData(allFiles);
+                scan.close();
+                break;
+            }
+        }
         
         
     }

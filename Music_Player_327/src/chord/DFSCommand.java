@@ -45,31 +45,28 @@ public class DFSCommand
             {
                 dfs.leave();     
             }
-            if(result[0].equals("delete")) {
-            	dfs.delete(result[1]);
-            }
-            
-            if (result[0].equals("touch"))
+            if (result[0].equals("touch") && result.length > 1)
             {
                 dfs.create(result[1]);
             }
             
-            if (result[0].equals("delete"))
+            if (result[0].equals("delete") && result.length > 1)
             {
                 dfs.delete(result[1]);
             }
             
-            if (result[0].equals("read"))
+            if (result[0].equals("read") && result.length > 2)
             {
                 int pageNum = Integer.parseInt(result[2]);
                 String fileName = result[1];
-                RemoteInputFileStream fileStream = dfs.read(fileName,pageNum);
-                printStream(fileStream);
+                RemoteInputFileStream input = dfs.read(fileName,pageNum);
+                printStream(input);
             }
             
             if (result[0].equals("head"))
             {
-                     
+                RemoteInputFileStream input = dfs.head(result[1]);
+                printStream(input);
             }
             
             if (result[0].equals("tail"))
@@ -78,16 +75,21 @@ public class DFSCommand
             }
             
             
-            if (result[0].equals("move"))
+            if (result[0].equals("move") && result.length > 2)
             {
                 dfs.move(result[1], result[2]);
             }
             
-            if(result[0].equals("append")) {
+            if(result[0].equals("append") && result.length > 2) {
             	RemoteInputFileStream input = new RemoteInputFileStream(result[2]);
             	dfs.append(result[1], input);
             }
             
+            if(result[0].equals("write") && result.length > 3) {
+            	RemoteInputFileStream input = new RemoteInputFileStream(result[2]);
+                int pageNum = Integer.parseInt(result[3]);
+            	dfs.write(result[1], input, pageNum);
+            }
             
             line=buffer.readLine();  
         }
