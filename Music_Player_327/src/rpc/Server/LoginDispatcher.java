@@ -45,7 +45,7 @@ public class LoginDispatcher {
     /**
      * Check the user info is correct to login
      * @param username : Username
-     * @param password : Password
+     * @param password : PasswordmnS
      * @return Success for user exist, false for user not exist
      */
     public String LoginUser(String username, String password) throws IOException{

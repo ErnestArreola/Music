@@ -44,6 +44,7 @@ public class ServerModule extends Application{
     
     static final int DFS_PORT = 2000;
     public static DFS dfs;
+    InitializeMusic mu = new InitializeMusic(dfs);
     
     
     
@@ -56,9 +57,9 @@ public class ServerModule extends Application{
             //starting the first peer
             dfs = new DFS(DFS_PORT);
             registerDispatchers();
-            //creating 4 more peers and join the chord
-//            int join_port = DFS_PORT + 1;
-//            
+           // creating 4 more peers and join the chord
+            int join_port = DFS_PORT + 1;
+            
 //            for (int i = 0; i < 4; i++) {
 //                DFS newDFS = new DFS(join_port);
 //                newDFS.join("127.0.0.1", DFS_PORT);
@@ -68,8 +69,10 @@ public class ServerModule extends Application{
             
             // Add user.json to chord if not exist
             String userMetaFile = "user";
+            String musicMetaFile = "music";
             String dfsList = dfs.lists();
             
+
             
 //            File temp = new File("user.json");
 //            boolean exists = temp.exists();
@@ -78,18 +81,29 @@ public class ServerModule extends Application{
 //            System.out.println("CWD Path : " + System.getProperty("user.dir") + "/src/files/user.json");
             
             
-//            try {
 //            	System.out.println(">>>>>>>>>>>>>> path: " + ServerModule.class.getResource("user.json").getPath());
 //            	
 //            }catch(Exception e){
 //                e.printStackTrace();
-//            } 
+//            }
+            
             
             if(!dfsList.contains(userMetaFile)) {
 //            	dfs.delete();
                 dfs.create(userMetaFile);
                 dfs.append(userMetaFile, new RemoteInputFileStream(System.getProperty("user.dir") + "/src/files/users.json"));
+  
             }
+            
+            if(!dfsList.contains(musicMetaFile)) {
+            	System.out.println("Initial Print");
+            	dfs.create(musicMetaFile);
+            	mu.init();
+            	for (int i = 1; i < 11; i++ ) {
+                dfs.append(musicMetaFile, new RemoteInputFileStream(System.getProperty("user.dir") + "/src/files/music" + Integer.toString(i) + ".json"));
+            	}
+            	}
+////            
       
             
             
