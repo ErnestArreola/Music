@@ -57,16 +57,17 @@ public class ServerModule extends Application{
             dfs = new DFS(DFS_PORT);
             registerDispatchers();
             //creating 4 more peers and join the chord
-            int join_port = DFS_PORT + 1;
-            for (int i = 0; i < 4; i++){
-                DFS newDFS = new DFS(join_port);
-                newDFS.join("127.0.0.1", DFS_PORT);
-                join_port  ++;
-            }  
+//            int join_port = DFS_PORT + 1;
+//            
+//            for (int i = 0; i < 4; i++) {
+//                DFS newDFS = new DFS(join_port);
+//                newDFS.join("127.0.0.1", DFS_PORT);
+//                join_port++;
+//            }  
             
             
             // Add user.json to chord if not exist
-            String userMetaFile = "users";
+            String userMetaFile = "user";
             String dfsList = dfs.lists();
             
             
@@ -89,17 +90,14 @@ public class ServerModule extends Application{
                 dfs.create(userMetaFile);
                 dfs.append(userMetaFile, new RemoteInputFileStream(System.getProperty("user.dir") + "/src/files/users.json"));
             }
-            
-            
-            
-            
+      
             
             
         }catch(Exception e){
             e.printStackTrace();
         }
         
-//        registerDispatchers();
+        registerDispatchers();
     }
     
     public void run() throws IOException{

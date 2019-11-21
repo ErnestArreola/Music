@@ -55,7 +55,6 @@ public class LoginDispatcher {
         BufferedReader bufReader;
         //get the User lists first
         try {
-            System.out.println("DISPATCHER 222222");
             
             RemoteInputFileStream rifs = dfs.read("user", 0);
             rifs.connect();

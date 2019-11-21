@@ -298,6 +298,7 @@ public class DFS
         public FileJson getFile(String filename){
             FileJson file = null;
             for(int i = 0; i < getFilesSize(); i++){
+            	System.out.println("Printing File" + this.files.get(i));
                 if(this.files.get(i).getName().equals(filename)){
                     return this.files.get(i);
                 }
@@ -604,7 +605,8 @@ public class DFS
     	System.out.println(">>>>>>>>>>>>DFS read filename: " + fileName);
     	FilesJson retrievedMetadata = this.readMetaData();	
     	System.out.println(">>>>>>>>>>>>DFS read metadate " + retrievedMetadata);
-    	FileJson file = retrievedMetadata.getFile(fileName);	
+    	FileJson file = retrievedMetadata.getFile(fileName);
+    	    	
         
         System.out.println(">>>>>>>>>>>>DFS read " + file);
         
@@ -637,9 +639,6 @@ public class DFS
     public void append(String fileName, RemoteInputFileStream data) throws Exception {
     	
     	
-    	
-    	
-    	
     	/* Grab file from metadata */
         FilesJson files = readMetaData();
         FileJson file = files.getFile(fileName);
@@ -666,18 +665,7 @@ public class DFS
         writeMetaData(files);
 
     	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
+   
     	
 //        Gson gson = new Gson();
 //        FilesJson allFiles = this.readMetaData();
