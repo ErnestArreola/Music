@@ -1,4 +1,4 @@
-
+package chord;
 
 import java.io.*;
 import com.google.gson.*;
@@ -71,7 +71,8 @@ public class DFSCommand
             
             if (result[0].equals("tail"))
             {
-                     
+                RemoteInputFileStream input = dfs.tail(result[1]);
+                printStream(input);
             }
             
             

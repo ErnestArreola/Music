@@ -1,4 +1,4 @@
-//package chord;
+package chord;
 
 import java.rmi.*;
 import java.io.*;

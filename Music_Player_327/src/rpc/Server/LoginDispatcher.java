@@ -20,6 +20,10 @@ import controllers.CreateController;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import chord.DFS;
+import chord.RemoteInputFileStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,11 +31,15 @@ import java.util.List;
  */
 public class LoginDispatcher {
     static final int FRAGMENT_SIZE = 8192; 
-    		Gson theGson = new Gson();
+    Gson theGson = new Gson();
 
-    public LoginDispatcher()
+    DFS dfs;      
+                
+    
+            
+    public LoginDispatcher(DFS dfs)
     {
-        
+    	this.dfs = dfs;
     }
 
     /**
@@ -47,10 +55,16 @@ public class LoginDispatcher {
         BufferedReader bufReader;
         //get the User lists first
         try {
-        	System.out.println("DISPATCHER 222222");
-            bufReader = new BufferedReader(new FileReader("src/files/users.json"));
+            System.out.println("DISPATCHER 222222");
+            
+            RemoteInputFileStream rifs = dfs.read("user", 0);
+            rifs.connect();
+            bufReader = new BufferedReader(new InputStreamReader((InputStream) rifs));
+            
+            
+//            bufReader = new BufferedReader(new FileReader("src/files/users.json"));
             bufReader.mark(10);   
-            System.out.println(bufReader);
+            System.out.println(">>>>>>>>>>>> BUFF:  " + bufReader);
             if(bufReader.read() != -1){
                 bufReader.reset();
                 Type listType = new TypeToken<List<User>>() {}.getType();
@@ -63,6 +77,8 @@ public class LoginDispatcher {
         } catch (FileNotFoundException ex) {
 //                Logger.getLogger(CreateController.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(LoginDispatcher.class.getName()).log(Level.SEVERE, null, ex);
         }
         //get the user object with username
         //check user exist in User list or not

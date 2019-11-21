@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import chord.DFS;
 
 /**
  *
@@ -25,9 +26,12 @@ import java.util.List;
 public class PlaylistDispatcher {
     
     Gson gson;
-    public PlaylistDispatcher()
+    DFS dfs;
+    
+    public PlaylistDispatcher(DFS dfs)
     {
        gson = new Gson();
+       this.dfs = dfs;
     }
    
     /**

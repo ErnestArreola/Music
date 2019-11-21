@@ -1,6 +1,8 @@
 package rpc.Server;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -12,6 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import chord.DFS;
+import chord.RemoteInputFileStream;
+
 
 /**
  *
@@ -37,12 +42,64 @@ public class ServerModule extends Application{
     private ArrayList<String> reqHistory;
     
     
+    static final int DFS_PORT = 2000;
+    public static DFS dfs;
+    
+    
     
     public ServerModule() throws SocketException {
         socket = new DatagramSocket(PORT);
         reqHistory = new ArrayList<>();
         dispatcher = new Dispatcher();
-        registerDispatchers();
+        
+        try{
+            //starting the first peer
+            dfs = new DFS(DFS_PORT);
+            registerDispatchers();
+            //creating 4 more peers and join the chord
+            int join_port = DFS_PORT + 1;
+            for (int i = 0; i < 4; i++){
+                DFS newDFS = new DFS(join_port);
+                newDFS.join("127.0.0.1", DFS_PORT);
+                join_port  ++;
+            }  
+            
+            
+            // Add user.json to chord if not exist
+            String userMetaFile = "users";
+            String dfsList = dfs.lists();
+            
+            
+//            File temp = new File("user.json");
+//            boolean exists = temp.exists();
+//            
+//            System.out.println("Temp file exists : " + exists);
+//            System.out.println("CWD Path : " + System.getProperty("user.dir") + "/src/files/user.json");
+            
+            
+//            try {
+//            	System.out.println(">>>>>>>>>>>>>> path: " + ServerModule.class.getResource("user.json").getPath());
+//            	
+//            }catch(Exception e){
+//                e.printStackTrace();
+//            } 
+            
+            if(!dfsList.contains(userMetaFile)) {
+//            	dfs.delete();
+                dfs.create(userMetaFile);
+                dfs.append(userMetaFile, new RemoteInputFileStream(System.getProperty("user.dir") + "/src/files/users.json"));
+            }
+            
+            
+            
+            
+            
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+//        registerDispatchers();
     }
     
     public void run() throws IOException{
@@ -61,7 +118,7 @@ public class ServerModule extends Application{
             if(!reqHistory.contains(reqString)){
                 reqHistory.add(reqString);
                 
-                new Thread (new Runnable() {
+                new Thread (new Runnable() {   
                     @Override
                     public void run() {
                         try {
@@ -101,15 +158,15 @@ public class ServerModule extends Application{
     
     
     private void registerDispatchers(){
-        SongDispatcher songDispatcher = new SongDispatcher();
+        SongDispatcher songDispatcher = new SongDispatcher(this.dfs);
         dispatcher.registerObject(songDispatcher, "SongServices");
-        LoginDispatcher userDispatcher = new LoginDispatcher();
+        LoginDispatcher userDispatcher = new LoginDispatcher(this.dfs);
         dispatcher.registerObject(userDispatcher, "LoginServices");
-        RegisterDispatcher registerDispatcher = new RegisterDispatcher();
+        RegisterDispatcher registerDispatcher = new RegisterDispatcher(this.dfs);
         dispatcher.registerObject(registerDispatcher, "RegisterServices");
-        PlaylistDispatcher playlistDispatcher = new PlaylistDispatcher();
+        PlaylistDispatcher playlistDispatcher = new PlaylistDispatcher(this.dfs);
         dispatcher.registerObject(playlistDispatcher, "PlaylistServices");
-        MusicDispatcher musicDispatcher = new MusicDispatcher();
+        MusicDispatcher musicDispatcher = new MusicDispatcher(this.dfs);
         dispatcher.registerObject(musicDispatcher, "MusicServices");
     }
     
@@ -120,7 +177,7 @@ public class ServerModule extends Application{
         System.out.println("Server is listening on PORT: " + PORT);
         new ServerModule().run();
         
-  
+        
     }
     @Override
     public void start(Stage primaryStage) throws Exception {

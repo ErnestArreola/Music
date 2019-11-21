@@ -15,14 +15,19 @@ import java.io.FileInputStream;
 import java.io.File;
 import java.util.Base64;
 import java.io.FileNotFoundException;
+import chord.DFS;
+import chord.RemoteInputFileStream;
 
 
 public class SongDispatcher
 {
     static final int FRAGMENT_SIZE = 8192; 
-    public SongDispatcher()
+    DFS dfs;
+    
+    
+    public SongDispatcher(DFS dfs)
     {
-        
+        this.dfs = dfs;
     }
     
     /* 
@@ -33,13 +38,27 @@ public class SongDispatcher
     */
     public String getSongChunk(Long key, Long fragment) throws FileNotFoundException, IOException
     {
-        byte buf[] = new byte[FRAGMENT_SIZE];
+        byte buf[] = new byte[FRAGMENT_SIZE];          
         
-        File file = new File("src/rpc/server/" + key);
-        FileInputStream inputStream = new FileInputStream(file);
-        inputStream.skip(fragment * FRAGMENT_SIZE);
-        inputStream.read(buf);
-        inputStream.close(); 
+        try{
+            RemoteInputFileStream rifs = dfs.read(key + ".mp3", 0);
+            rifs.connect();
+            rifs.skip(fragment * FRAGMENT_SIZE );
+            rifs.read(buf, 0, FRAGMENT_SIZE);
+            rifs.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+             
+        
+        
+//        File file = new File("src/rpc/server/" + key);
+//        FileInputStream inputStream = new FileInputStream(file);
+//        inputStream.skip(fragment * FRAGMENT_SIZE);
+//        inputStream.read(buf);
+//        inputStream.close(); 
+
+
         // Encode in base64 so it can be transmitted 
          return Base64.getEncoder().encodeToString(buf);
     }
@@ -50,14 +69,29 @@ public class SongDispatcher
      */
     public Integer getFileSize(Long key) throws FileNotFoundException, IOException
     {
-        File file = new File("src/rpc/server/" + key);
-        if(file == null) {
-        	System.out.println("This file is null");
-        	
+        
+        Integer total = 0;
+        
+        try{
+            RemoteInputFileStream rifs = dfs.read(key + ".mp3",0);
+            rifs.connect();
+            total = rifs.available();
+            rifs.close();
+        }catch(Exception e){
         }
-        Integer total =  (int)file.length();
+        
+        
+//        File file = new File("src/rpc/server/" + key);
+//        if(file == null) {
+//        	System.out.println("This file is null");
+//        	
+//        }
+//        Integer total =  (int)file.length();
         
         return total;
     }
     
 }
+
+
+

@@ -21,15 +21,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import chord.DFS;
+
 /**
  *
  * @author LILI
  */
 public class RegisterDispatcher {
     static final int FRAGMENT_SIZE = 8192; 
-    public RegisterDispatcher()
+    DFS dfs;
+    
+    public RegisterDispatcher(DFS dfs)
     {
-        
+        this.dfs = dfs;
     }
     /**
      * Create account with user info
