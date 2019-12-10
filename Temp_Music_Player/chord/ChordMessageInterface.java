@@ -1,4 +1,4 @@
-package chord;
+//package chord;
 
 import java.rmi.*;
 import java.io.*;
@@ -21,6 +21,7 @@ public interface ChordMessageInterface extends Remote
     public boolean haveCommited(Transaction transaction, Long readTime) throws RemoteException ;
     public void doAbort(Transaction trans) throws RemoteException; 
     public Transaction.Vote getDecision(Transaction transaction) throws RemoteException;
+      public long getTime() throws RemoteException;
     
     public void put(long guidObject, RemoteInputFileStream inputStream) throws IOException, RemoteException;
     public void put(long guidObject, String text) throws IOException, RemoteException;
