@@ -312,7 +312,9 @@ public class DFS
     int port;
     Chord  chord;
     long metadata;
+    long guid;
     
+    HashMap<Long, Long> readTimes = new HashMap<Long, Long>();
     
     private long md5(String objectName)
     {
@@ -340,7 +342,7 @@ public class DFS
         
         this.port = port;
         this.metadata = md5("Metadata");
-        long guid = md5("" + port);
+        this.guid = md5("" + port);
         chord = new Chord(port, guid);
         Files.createDirectories(Paths.get(guid+"/repository"));
         Files.createDirectories(Paths.get(guid+"/tmp"));
@@ -771,5 +773,42 @@ public class DFS
     }
     
 
+    
+    
+    public void write(String fileName) throws IOException{
+        
+     
+        String path;
+
+        int totalPeers = 2;
+        int numOfCanCommit = 0;
+        long transactionId = (int)(Math.random() * 10000 + 1);
+        HashMap<Long, Transaction> transactionMap = new HashMap<Long, Transaction>();
+
+        for(int i = 0; i < totalPeers; i++){
+            long guidTemp = md5(fileName + i);
+            path = "./" + this.guid + "/" + fileName;
+            RemoteInputFileStream fileStream = new RemoteInputFileStream(path);
+
+
+            ChordMessageInterface peer = chord.locateSuccessor(guidTemp);
+            
+            
+            // Ask all of the peers if we can commit, and pass it a new transaction object
+            Transaction peerTransaction = new Transaction(guidTemp, fileStream, transactionId, Transaction.Operation.WRITE);
+            transactionMap.put(guidTemp, peerTransaction);
+             
+            Transaction peerCanCommitTransaction = peer.canCommit(peerTransaction, (Long) readTimes.get(guidTemp));
+            transactionMap.put(guidTemp, peerCanCommitTransaction);
+
+            if(peer.getDecision(peerCanCommitTransaction) == Transaction.Vote.YES)
+             numOfCanCommit++;
+                    
+        }
+        
+        
+    }
+    
+    
     
 }

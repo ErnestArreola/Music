@@ -16,8 +16,11 @@ public interface ChordMessageInterface extends Remote
     
 
 
-
-    
+    public Transaction canCommit(Transaction trans, Long readTime);
+    public void doCommit(Transaction trans) throws IOException, RemoteException;
+    public boolean haveCommited(Transaction transaction, Long readTime) throws RemoteException ;
+    public void doAbort(Transaction trans) throws RemoteException; 
+    public Transaction.Vote getDecision(Transaction transaction) throws RemoteException;
     
     public void put(long guidObject, RemoteInputFileStream inputStream) throws IOException, RemoteException;
     public void put(long guidObject, String text) throws IOException, RemoteException;

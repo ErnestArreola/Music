@@ -91,6 +91,18 @@ public class DFSCommand
             	dfs.write(result[1], input, pageNum);
             }
             
+            if(result[0].equals("write") && result.length == 2) {
+                String fileName = result[1];
+                dfs.write(fileName);
+            }
+            
+            if(result[0].equals("read") && result.length == 2) {
+                String fileName = result[1];
+                dfs.write(fileName);
+            }
+            
+            
+            
             line=buffer.readLine();  
         }
         
